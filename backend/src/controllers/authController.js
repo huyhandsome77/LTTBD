@@ -61,7 +61,7 @@ exports.register = async (req, res) => {
 //
 exports.login = async (req, res) => {
     try {
-        const { account, password } = req.body; // 'account' có thể là username hoặc phone
+        const { account, password } = req.body;
 
         if (!account || !password) {
             return res.status(400).json({ message: "Vui lòng nhập đầy đủ thông tin!" });
