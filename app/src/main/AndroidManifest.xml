@@ -14,21 +14,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppDatMon"
         android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".ui.admin.ChiTietDanhMucActivity"
+            android:exported="false" />
+
         <activity
             android:name=".ui.admin.AdminActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.auth.RegisterActivity"
             android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
