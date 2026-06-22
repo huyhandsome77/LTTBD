@@ -40,12 +40,16 @@ class AdminActivity : AppCompatActivity() {
                 R.id.nav_points -> {
                     tvTitle.text = "Quản lý tích điểm"
                     tvHomeWelcome.visibility = View.GONE
-                    // supportFragmentManager.beginTransaction().replace(R.id.content, AdminPointsFragment()).commit()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.content, AdminPointsFragment())
+                        .commit()
                 }
                 R.id.nav_stats -> {
                     tvTitle.text = "Xem thống kê"
                     tvHomeWelcome.visibility = View.GONE
-                    // supportFragmentManager.beginTransaction().replace(R.id.content, AdminStatsFragment()).commit()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.content, AdminStatsFragment())
+                        .commit()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
