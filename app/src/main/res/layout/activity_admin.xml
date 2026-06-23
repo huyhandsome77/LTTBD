@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F4F6F8">
 
-    <!-- TOP BAR -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="0dp"
@@ -47,9 +46,8 @@
 
     </LinearLayout>
 
-    <!-- CONTENT -->
     <FrameLayout
-        android:id="@+id/content"
+        android:id="@+id/content_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#F4F6F8"
@@ -58,7 +56,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- BOTTOM BAR -->
     <LinearLayout
         android:id="@+id/bottomBar"
         android:layout_width="0dp"
@@ -72,10 +69,13 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+            android:id="@+id/btn_menu_product"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="vertical">
 
             <ImageView
@@ -93,10 +93,13 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_menu_table"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="vertical">
 
             <ImageView
@@ -113,16 +116,18 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <!-- chừa khoảng trống cho nút home -->
         <Space
             android:layout_width="88dp"
             android:layout_height="match_parent" />
 
         <LinearLayout
+            android:id="@+id/btn_menu_user"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="vertical">
 
             <ImageView
@@ -140,10 +145,13 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_menu_order"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="vertical">
 
             <ImageView
@@ -162,13 +170,14 @@
 
     </LinearLayout>
 
-    <!-- HOME CENTER BUTTON -->
     <FrameLayout
         android:id="@+id/homeButton"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:background="@drawable/bg_home_circle"
         android:elevation="8dp"
+        android:clickable="true"
+        android:focusable="true"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="@id/bottomBar"
         app:layout_constraintStart_toStartOf="parent"
