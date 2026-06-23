@@ -11,6 +11,7 @@ import com.example.appdatmon.R
 import com.google.android.material.navigation.NavigationView
 
 class AdminActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin)
