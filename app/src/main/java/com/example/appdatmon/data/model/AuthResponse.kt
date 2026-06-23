@@ -5,9 +5,16 @@ data class RegisterResponse(
     val user: UserData?
 )
 
+data class LoginResponse(
+    val message: String,
+    val token: String?,
+    val user: UserData?
+)
+
 data class UserData(
     val id: Long,
     val fullName: String,
     val username: String,
-    val phone: String
+    val phone: String,
+    val role: String?
 )
