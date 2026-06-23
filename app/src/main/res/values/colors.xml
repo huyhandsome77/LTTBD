@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="admin_primary">#1D2A44</color>
+    <color name="table_using">#3A7BD5</color>
+    <color name="table_reserved">#6C757D</color>
+    <color name="table_empty">#E0E0E0</color>
+    <color name="btn_delete">#FF3B30</color>
 </resources>

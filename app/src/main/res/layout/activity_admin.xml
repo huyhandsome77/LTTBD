@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
+ feature-userform-ngan
     android:layout_height="match_parent"
     android:background="#F4F6F8">
 
@@ -68,7 +71,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+    android:layout_height="match_parent">
+
+    <!-- MAIN UI -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F4F6F8">
+ Basic
+
+        <!-- TOP BAR -->
         <LinearLayout
+ feature-userform-ngan
             android:id="@+id/btn_menu_product"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -78,13 +92,31 @@
             android:focusable="true"
             android:orientation="vertical">
 
+            android:id="@+id/topBar"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_top_bar"
+            android:gravity="center_vertical"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+ Basic
+
             <ImageView
-                android:layout_width="27dp"
-                android:layout_height="27dp"
-                android:src="@drawable/ic_box"
-                app:tint="#FFFFFF" />
+                android:id="@+id/btnMenu"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_menu"
+                app:tint="#000000" />
 
             <TextView
+ feature-userform-ngan
                 android:text="QL Sản phẩm"
                 android:textColor="#D9DDE5"
                 android:textSize="9sp"
@@ -102,20 +134,26 @@
             android:focusable="true"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/ic_table"
-                app:tint="#FFFFFF" />
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Trang chủ"
+                android:textStyle="bold"
+                android:textSize="13sp"
+                android:textColor="#000000"
+                android:layout_marginStart="16dp" />
+Basic
 
-            <TextView
-                android:text="QL Bàn"
-                android:textColor="#D9DDE5"
-                android:textSize="9sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_user"
+                app:tint="#000000" />
+
         </LinearLayout>
 
+ feature-userform-ngan
         <Space
             android:layout_width="88dp"
             android:layout_height="match_parent" />
@@ -136,20 +174,43 @@
                 android:src="@drawable/ic_user"
                 app:tint="#FFFFFF" />
 
+        <!-- CONTENT -->
+
+        <!-- BOTTOM BAR -->
+ Basic
+
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#F4F6F8"
+            app:layout_constraintBottom_toTopOf="@id/bottomBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topBar">
+
+            <!-- Default Home Content could be here if not using fragments for everything -->
             <TextView
-                android:text="QL User"
-                android:textColor="#D9DDE5"
-                android:textSize="9sp"
+                android:id="@+id/tvHomeWelcome"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Chào mừng Admin"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </FrameLayout>
 
         <LinearLayout
+ feature-userform-ngan
             android:id="@+id/btn_menu_order"
+
+            android:id="@+id/bottomBar"
+ Basic
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="64dp"
+            android:background="#172235"
             android:gravity="center"
+ feature-userform-ngan
             android:clickable="true"
             android:focusable="true"
             android:orientation="vertical">
@@ -159,15 +220,58 @@
                 android:layout_height="28dp"
                 android:src="@drawable/ic_bill"
                 app:tint="#FFFFFF" />
+]
+            android:paddingTop="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <TextView
-                android:text="QL Đơn hàng"
-                android:textColor="#D9DDE5"
-                android:textSize="9sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageView android:layout_width="27dp" android:layout_height="27dp" android:src="@drawable/ic_box" app:tint="#FFFFFF" />
+                <TextView android:text="QL Sản phẩm" android:textColor="#D9DDE5" android:textSize="9sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_table" app:tint="#FFFFFF" />
+                <TextView android:text="QL Bàn" android:textColor="#D9DDE5" android:textSize="9sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <Space android:layout_width="88dp" android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageView android:layout_width="29dp" android:layout_height="29dp" android:src="@drawable/ic_user" app:tint="#FFFFFF" />
+                <TextView android:text="QL User" android:textColor="#D9DDE5" android:textSize="9sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageView android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/ic_bill" app:tint="#FFFFFF" />
+                <TextView android:text="QL Đơn hàng" android:textColor="#D9DDE5" android:textSize="9sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+Basic
+
         </LinearLayout>
 
+    feature-userform-ngan
     </LinearLayout>
 
     <FrameLayout
@@ -193,3 +297,35 @@
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- HOME CENTER BUTTON -->
+        <FrameLayout
+            android:id="@+id/homeButton"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:background="@drawable/bg_home_circle"
+            android:elevation="8dp"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/bottomBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <ImageView android:layout_width="38dp" android:layout_height="38dp" android:layout_gravity="center" android:src="@drawable/ic_home" app:tint="#FFFFFF" />
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- SIDE NAVIGATION MENU -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navView"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header_admin"
+        app:menu="@menu/admin_drawer_menu"
+        app:itemIconTint="#172235"
+        app:itemTextColor="#333333"
+        app:itemShapeFillColor="#E8EAF6"
+        app:itemShapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.SmallComponent" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
+ Basic
