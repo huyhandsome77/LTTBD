@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.FutureSuShi" parent="Theme.Material3.Dark.NoActionBar">
+
+        <item name="android:statusBarColor">@color/black_main</item>
+        <item name="android:navigationBarColor">@color/black_main</item>
+
+    </style>
+
+     />
+</resources>
