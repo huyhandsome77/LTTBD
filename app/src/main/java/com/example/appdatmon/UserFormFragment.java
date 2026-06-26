@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.appdatmon.data.model.UserData;
+
 public class UserFormFragment extends Fragment {
 
     private EditText edtFullName;
@@ -161,11 +163,11 @@ public class UserFormFragment extends Fragment {
         }
 
         // Lưu dữ liệu vào UserData
-        UserData.fullName = fullName;
-        UserData.email = email;
-        UserData.phone = phone;
-        UserData.role = spinnerRole.getSelectedItem().toString();
-        UserData.status = spinnerStatus.getSelectedItem().toString();
+//        UserData.fullName = fullName;
+//        UserData.email = email;
+//        UserData.phone = phone;
+//        UserData.role = spinnerRole.getSelectedItem().toString();
+//        UserData.status = spinnerStatus.getSelectedItem().toString();
 
         Toast.makeText(
                 requireContext(),

@@ -18,9 +18,15 @@ public class ActivityAdmin extends AppCompatActivity {
         View btnOrder = findViewById(R.id.btn_menu_order);
         View btnHome = findViewById(R.id.homeButton);
 
-        // Mặc định ban đầu mở màn hình quản lý người dùng
+        // Mặc định ban đầu hiện lời chào trang chủ
         if (savedInstanceState == null) {
-            loadFragment(new UserListFragment());
+            View tvHomeWelcome = findViewById(R.id.tvHomeWelcome);
+            if (tvHomeWelcome != null) tvHomeWelcome.setVisibility(View.VISIBLE);
+
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_container);
+            if (fragment != null) {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            }
         }
 
         // Bắt sự kiện chuyển đổi các mục quản lý ở menu đáy

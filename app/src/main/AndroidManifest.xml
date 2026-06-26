@@ -1,34 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.appdatmon">
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
- feature-userform-ngan
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <activity
-        android:name=".MainActivity"
-        android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-
-        <activity
-            android:name=".ActivityAdmin"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" android:exported="false" />
-
-
         android:theme="@style/Theme.AppDatMon"
-        android:usesCleartextTraffic="true">
-
-        <activity
-            android:name=".ui.admin.ChiTietDanhMucActivity"
-            android:exported="false" />
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
 
         <activity
             android:name=".ui.auth.LoginActivity"
@@ -38,8 +25,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.admin.AdminActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.admin.ChiTietDanhMucActivity"
             android:exported="false" />
 
         <activity
@@ -49,7 +41,11 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
- Basic
+
+        <activity
+            android:name=".ActivityAdmin"
+            android:exported="false" />
+
     </application>
 
 </manifest>

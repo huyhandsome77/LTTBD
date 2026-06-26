@@ -5,72 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
- feature-userform-ngan
-    android:layout_height="match_parent"
-    android:background="#F4F6F8">
-
-    <LinearLayout
-        android:id="@+id/topBar"
-        android:layout_width="0dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/bg_top_bar"
-        android:gravity="center_vertical"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_menu"
-            app:tint="#000000" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Trang chủ"
-            android:textStyle="bold"
-            android:textSize="13sp"
-            android:textColor="#000000"
-            android:layout_marginStart="16dp" />
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_user"
-            app:tint="#000000" />
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/content_container"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#F4F6F8"
-        app:layout_constraintTop_toBottomOf="@id/topBar"
-        app:layout_constraintBottom_toTopOf="@id/bottomBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/bottomBar"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:background="#172235"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingTop="6dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
     android:layout_height="match_parent">
 
     <!-- MAIN UI -->
@@ -78,20 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F4F6F8">
- Basic
 
         <!-- TOP BAR -->
         <LinearLayout
- feature-userform-ngan
-            android:id="@+id/btn_menu_product"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical">
-
             android:id="@+id/topBar"
             android:layout_width="0dp"
             android:layout_height="44dp"
@@ -106,7 +29,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
- Basic
 
             <ImageView
                 android:id="@+id/btnMenu"
@@ -116,24 +38,6 @@
                 app:tint="#000000" />
 
             <TextView
- feature-userform-ngan
-                android:text="QL Sản phẩm"
-                android:textColor="#D9DDE5"
-                android:textSize="9sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btn_menu_table"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical">
-
                 android:id="@+id/tvTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -143,7 +47,6 @@
                 android:textSize="13sp"
                 android:textColor="#000000"
                 android:layout_marginStart="16dp" />
-Basic
 
             <ImageView
                 android:layout_width="24dp"
@@ -153,34 +56,12 @@ Basic
 
         </LinearLayout>
 
- feature-userform-ngan
-        <Space
-            android:layout_width="88dp"
-            android:layout_height="match_parent" />
-
-        <LinearLayout
-            android:id="@+id/btn_menu_user"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="29dp"
-                android:layout_height="29dp"
-                android:src="@drawable/ic_user"
-                app:tint="#FFFFFF" />
-
         <!-- CONTENT -->
 
         <!-- BOTTOM BAR -->
- Basic
 
         <FrameLayout
-            android:id="@+id/content"
+            android:id="@+id/content_container"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="#F4F6F8"
@@ -201,47 +82,39 @@ Basic
         </FrameLayout>
 
         <LinearLayout
- feature-userform-ngan
-            android:id="@+id/btn_menu_order"
-
             android:id="@+id/bottomBar"
- Basic
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:background="#172235"
             android:gravity="center"
- feature-userform-ngan
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/ic_bill"
-                app:tint="#FFFFFF" />
-]
+            android:orientation="horizontal"
             android:paddingTop="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
             <LinearLayout
+                android:id="@+id/btn_menu_product"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true">
                 <ImageView android:layout_width="27dp" android:layout_height="27dp" android:src="@drawable/ic_box" app:tint="#FFFFFF" />
                 <TextView android:text="QL Sản phẩm" android:textColor="#D9DDE5" android:textSize="9sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/btn_menu_table"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true">
                 <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_table" app:tint="#FFFFFF" />
                 <TextView android:text="QL Bàn" android:textColor="#D9DDE5" android:textSize="9sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
             </LinearLayout>
@@ -249,54 +122,32 @@ Basic
             <Space android:layout_width="88dp" android:layout_height="match_parent" />
 
             <LinearLayout
+                android:id="@+id/btn_menu_user"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true">
                 <ImageView android:layout_width="29dp" android:layout_height="29dp" android:src="@drawable/ic_user" app:tint="#FFFFFF" />
                 <TextView android:text="QL User" android:textColor="#D9DDE5" android:textSize="9sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/btn_menu_order"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true">
                 <ImageView android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/ic_bill" app:tint="#FFFFFF" />
                 <TextView android:text="QL Đơn hàng" android:textColor="#D9DDE5" android:textSize="9sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
             </LinearLayout>
-Basic
 
         </LinearLayout>
-
-    feature-userform-ngan
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/homeButton"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:background="@drawable/bg_home_circle"
-        android:elevation="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="@id/bottomBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ImageView
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_home"
-            app:tint="#FFFFFF" />
-
-    </FrameLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- HOME CENTER BUTTON -->
         <FrameLayout
@@ -328,4 +179,3 @@ Basic
         app:itemShapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.SmallComponent" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
- Basic

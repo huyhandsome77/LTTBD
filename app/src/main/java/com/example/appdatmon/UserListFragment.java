@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.appdatmon.data.model.UserData;
+
 public class UserListFragment extends Fragment {
 
     public UserListFragment() {
@@ -141,13 +143,13 @@ public class UserListFragment extends Fragment {
             return;
         }
 
-        if (!UserData.fullName.isEmpty()) {
-
-            userNew.setVisibility(View.VISIBLE);
-
-            tvName.setText(UserData.fullName);
-            tvEmail.setText(UserData.email);
-            tvRole.setText(UserData.role);
-        }
+//        if (!UserData.fullName.isEmpty()) {
+//
+//            userNew.setVisibility(View.VISIBLE);
+//
+//            tvName.setText(UserData.fullName);
+//            tvEmail.setText(UserData.email);
+//            tvRole.setText(UserData.role);
+//        }
     }
 }
