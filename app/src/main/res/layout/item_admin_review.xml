@@ -1,107 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    android:layout_marginHorizontal="4dp"
-    app:cardCornerRadius="15dp"
-    app:cardElevation="3dp">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:orientation="vertical">
+        android:paddingVertical="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvCustomerName"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_weight="1.2"
+            android:text="Ronaldo"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:textColor="#333333" />
 
-            <!-- Avatar -->
-            <FrameLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/bg_home_circle"
-                android:backgroundTint="#F3E5F5">
-                <TextView
-                    android:id="@+id/tvAvatarChar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="R"
-                    android:textColor="#7B1FA2"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="12dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvCustomerName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ronaldo"
-                    android:textColor="#172235"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvDishName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Món: Gà rán"
-                    android:textColor="#757575"
-                    android:textSize="12sp"
-                    android:background="@drawable/bg_input_light"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="2dp"
-                    android:layout_marginTop="2dp"/>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tvRating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="4.0 ★"
-                android:textColor="#FBC02D"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tvDishName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Gà"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:textColor="#333333" />
 
         <TextView
             android:id="@+id/tvComment"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Món ăn rất ngon, phục vụ nhiệt tình!"
-            android:textColor="#333333"
-            android:textSize="14sp"
-            android:layout_marginTop="12dp"
-            android:lineSpacingExtra="4dp"/>
+            android:layout_weight="1.5"
+            android:text="Mặn vchhhh"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:textColor="#333333" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvRating"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="end">
+            android:layout_weight="0.8"
+            android:text="4 sao"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:textColor="#333333" />
 
-            <ImageButton
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <TextView
                 android:id="@+id/btnDelete"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@android:drawable/ic_menu_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@drawable/bg_home_circle"
-                android:backgroundTint="#FFEBEE"
-                app:tint="#D32F2F"
-                android:contentDescription="Xóa đánh giá"/>
-        </LinearLayout>
+                android:backgroundTint="#E53935"
+                android:text="Xóa"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp" />
+        </FrameLayout>
 
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="8dp"
+        android:background="#EEEEEE" />
+</LinearLayout>

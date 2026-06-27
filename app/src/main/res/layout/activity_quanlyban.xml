@@ -30,10 +30,11 @@
             app:tint="#000000" />
 
         <TextView
+            android:id="@+id/tvTopBarTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Trang chủ"
+            android:text="Quản lý bàn"
             android:textStyle="bold"
             android:textSize="13sp"
             android:textColor="#000000"
@@ -72,6 +73,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+            android:id="@+id/btnBottomSanPham"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -93,6 +95,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btnBottomBan"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -113,12 +116,12 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <!-- chừa khoảng trống cho nút home -->
         <Space
             android:layout_width="88dp"
             android:layout_height="match_parent" />
 
         <LinearLayout
+            android:id="@+id/btnBottomUser"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -140,6 +143,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btnBottomDonHang"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

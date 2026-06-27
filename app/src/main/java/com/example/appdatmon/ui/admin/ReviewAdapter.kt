@@ -3,7 +3,6 @@ package com.example.appdatmon.ui.admin
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appdatmon.R
@@ -16,8 +15,7 @@ class ReviewAdapter(private var list: MutableList<Review>) : RecyclerView.Adapte
         val tvDish: TextView = view.findViewById(R.id.tvDishName)
         val tvComment: TextView = view.findViewById(R.id.tvComment)
         val tvRating: TextView = view.findViewById(R.id.tvRating)
-        val tvAvatarChar: TextView = view.findViewById(R.id.tvAvatarChar)
-        val btnDelete: ImageButton = view.findViewById(R.id.btnDelete)
+        val btnDelete: TextView = view.findViewById(R.id.btnDelete)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,10 +26,9 @@ class ReviewAdapter(private var list: MutableList<Review>) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
         holder.tvName.text = item.customerName
-        holder.tvDish.text = "Món: ${item.dishName}"
+        holder.tvDish.text = item.dishName
         holder.tvComment.text = item.comment
-        holder.tvRating.text = if (item.rating.contains("sao")) item.rating.replace(" sao", ".0 ★") else "${item.rating} ★"
-        holder.tvAvatarChar.text = item.customerName.take(1).uppercase()
+        holder.tvRating.text = item.rating
 
         holder.btnDelete.setOnClickListener {
             list.removeAt(position)

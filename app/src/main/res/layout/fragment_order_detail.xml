@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chi tiết đơn hàng"
+            android:textStyle="bold"
+            android:textSize="22sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mã đơn hàng"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_order_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="#DH001"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Khách hàng"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/tv_customer_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nguyễn Văn A"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số điện thoại"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/tv_customer_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="037990279"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tổng tiền"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/tv_total_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="250.000 VNĐ"
+            android:textStyle="bold"
+            android:textColor="#0055FF"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trạng thái"
+            android:layout_marginTop="16dp"/>
+
+        <Spinner
+            android:id="@+id/spinner_order_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp">
+
+            <Button
+                android:id="@+id/btn_cancel_order"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Hủy"/>
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/btn_save_order"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Lưu"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
