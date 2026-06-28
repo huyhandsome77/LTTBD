@@ -5,47 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#F8F9FA">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginBottom="16dp">
-
-        <Button
-            android:id="@+id/btnFilterAll"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="4dp"
-            android:backgroundTint="@color/admin_primary"
-            android:text="Tất cả"
-            android:textSize="11sp"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/btnFilterUsing"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="4dp"
-            android:backgroundTint="#ECEFF1"
-            android:text="Sử dụng"
-            android:textSize="11sp"
-            android:textColor="#555555" />
-
-        <Button
-            android:id="@+id/btnFilterEmpty"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:backgroundTint="#ECEFF1"
-            android:text="Trống"
-            android:textSize="11sp"
-            android:textColor="#555555" />
-    </LinearLayout>
+        android:text="Sơ đồ bàn nhà hàng"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#1D2A44"
+        android:layout_marginBottom="16dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTables"
@@ -56,45 +26,98 @@
         app:spanCount="3"
         tools:listitem="@layout/item_table" />
 
-    <LinearLayout
+    <!-- LEGEND (CHÚ THÍCH) -->
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp">
 
-        <View
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:background="@color/table_using" />
-        <TextView
-            android:layout_width="wrap_content"
+        <GridLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" Sử dụng   "
-            android:textSize="11sp"
-            android:textColor="@android:color/black"/>
+            android:columnCount="2"
+            android:rowCount="2"
+            android:padding="12dp">
 
-        <View
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:background="@color/table_reserved" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" Đã đặt   "
-            android:textSize="11sp"
-            android:textColor="@android:color/black"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="4dp">
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@drawable/bg_table_empty" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Bàn trống"
+                    android:textSize="12sp"
+                    android:textColor="#555555"/>
+            </LinearLayout>
 
-        <View
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:background="@color/table_empty" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" Trống"
-            android:textSize="11sp"
-            android:textColor="@android:color/black"/>
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="4dp">
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@drawable/bg_table_using" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Đang sử dụng"
+                    android:textSize="12sp"
+                    android:textColor="#555555"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="4dp">
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@drawable/bg_table_reserved" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Đã đặt trước"
+                    android:textSize="12sp"
+                    android:textColor="#555555"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="4dp">
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@drawable/bg_table_cleaning" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Cần dọn dẹp"
+                    android:textSize="12sp"
+                    android:textColor="#555555"/>
+            </LinearLayout>
+
+        </GridLayout>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

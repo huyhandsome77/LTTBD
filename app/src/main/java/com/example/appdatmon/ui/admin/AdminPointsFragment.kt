@@ -55,7 +55,7 @@ class AdminPointsFragment : Fragment() {
                 historyFragment.arguments = bundle
                 
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.content, historyFragment)
+                    .replace(R.id.content_container, historyFragment)
                     .addToBackStack(null)
                     .commit()
             }

@@ -27,6 +27,7 @@ class PointAdapter(
         val tvPoints: TextView = view.findViewById(R.id.tvPoints)
         val tvAvatarChar: TextView = view.findViewById(R.id.tvAvatarChar)
         val btnPlus: ImageButton = view.findViewById(R.id.btnPlus)
+        val btnMinus: ImageButton = view.findViewById(R.id.btnMinus)
         val btnViewHistory: ImageButton = view.findViewById(R.id.btnViewHistory)
     }
 
@@ -48,6 +49,10 @@ class PointAdapter(
         
         holder.btnPlus.setOnClickListener {
             showEditPointDialog(holder.itemView, item, true, position)
+        }
+
+        holder.btnMinus.setOnClickListener {
+            showEditPointDialog(holder.itemView, item, false, position)
         }
     }
 

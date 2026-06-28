@@ -4,8 +4,10 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="admin_primary">#1D2A44</color>
-    <color name="table_using">#3A7BD5</color>
-    <color name="table_reserved">#6C757D</color>
-    <color name="table_empty">#E0E0E0</color>
+    <color name="table_using">#EF5350</color>
+    <color name="table_reserved">#FFB300</color>
+    <color name="table_empty">#FFFFFF</color>
+    <color name="table_cleaning">#FB8C00</color>
+    <color name="table_text_dark">#333333</color>
     <color name="btn_delete">#FF3B30</color>
 </resources>

@@ -2,8 +2,10 @@ package com.example.appdatmon.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -28,8 +30,15 @@ class RegisterActivity : AppCompatActivity() {
         val etUsername = findViewById<EditText>(R.id.etUsername)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val etRePassword = findViewById<EditText>(R.id.etRePassword)
+        val spinnerRole = findViewById<Spinner>(R.id.spinnerRole)
         val btnRegister = findViewById<Button>(R.id.btnRegister)
         val txtLogin = findViewById<TextView>(R.id.txtLogin)
+
+        // Setup Spinner Role
+        val roles = arrayOf("CUSTOMER", "STAFF", "KITCHEN")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, roles)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerRole.adapter = adapter
 
         txtLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
@@ -78,13 +87,17 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val request = RegisterRequest(fullName, email, phone, username, password)
+            val role = spinnerRole.selectedItem.toString()
+            Toast.makeText(this, "Đăng ký với quyền: $role", Toast.LENGTH_SHORT).show()
+
+            val request = RegisterRequest(fullName, email, phone, username, password, role)
 
             RetrofitClient.instance.register(request).enqueue(object : Callback<RegisterResponse> {
                 override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
                     if (response.isSuccessful) {
                         val body = response.body()
-                        Toast.makeText(this@RegisterActivity, body?.message ?: "Đăng ký thành công", Toast.LENGTH_SHORT).show()
+                        val savedRole = body?.user?.role ?: role
+                        Toast.makeText(this@RegisterActivity, "ĐĂNG KÝ THÀNH CÔNG: $savedRole", Toast.LENGTH_LONG).show()
                         finish()
                     } else {
                         val errorMsg = try {

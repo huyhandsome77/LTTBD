@@ -50,16 +50,26 @@ class LoginActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                     if (response.isSuccessful) {
                         val body = response.body()
-                        Toast.makeText(this@LoginActivity, body?.message ?: "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
-                        
-                        if (body?.user?.role == "admin") {
-                            val intent = Intent(this@LoginActivity, com.example.appdatmon.ui.admin.AdminActivity::class.java)
-                            startActivity(intent)
-                        } else {
-                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                            startActivity(intent)
+                        val role = body?.user?.role?.uppercase() ?: "NONE"
+                        Toast.makeText(this@LoginActivity, "VAI TRÒ TÀI KHOẢN: $role", Toast.LENGTH_LONG).show()
+
+                        when (role) {
+                            "ADMIN" -> {
+                                val intent = Intent(this@LoginActivity, com.example.appdatmon.ui.admin.AdminActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            "STAFF" -> {
+                                val intent = Intent(this@LoginActivity, com.example.appdatmon.ui.staff.StaffActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            else -> {
+                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
                         }
-                        finish()
                     } else {
                         val errorMsg = try {
                             val errorBody = response.errorBody()?.string()

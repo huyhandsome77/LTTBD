@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_staff_tables"
+        android:icon="@drawable/ic_table"
+        android:title="Sơ đồ bàn" />
+    <item
+        android:id="@+id/nav_staff_points"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Tích điểm khách hàng" />
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@android:drawable/ic_lock_power_off"
+        android:title="Đăng xuất" />
+</menu>

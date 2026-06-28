@@ -31,6 +31,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".ui.staff.StaffActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.admin.ChiTietDanhMucActivity"
             android:exported="false" />
 

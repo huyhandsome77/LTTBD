@@ -9,7 +9,8 @@ require("dotenv").config();
 //
 exports.register = async (req, res) => {
     try {
-        const { fullName, email, phone, username, password } = req.body;
+        const { fullName, email, phone, username, password, role } = req.body;
+        console.log("Registration request received for:", username, "Role selected:", role);
 
         // 1. Kiểm tra xem người dùng đã tồn tại chưa (kiểm tra cả phone và username)
         const userExists = await User.findOne({
@@ -30,13 +31,18 @@ exports.register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         // 3. Tạo User
+        const finalRole = (role && role.toUpperCase()) || "CUSTOMER";
+
         const user = await User.create({
             fullName,
             email,
             phone,
             username,
-            password: hashedPassword
+            password: hashedPassword,
+            role: finalRole
         });
+
+        console.log("User created successfully with Role:", user.role);
 
         return res.status(201).json({
             message: "Đăng ký thành công!",
@@ -44,7 +50,8 @@ exports.register = async (req, res) => {
                 id: user.id,
                 fullName: user.fullName,
                 username: user.username,
-                phone: user.phone
+                phone: user.phone,
+                role: user.role
             }
         });
 
@@ -62,6 +69,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const { account, password } = req.body;
+        console.log("Login attempt with account:", account);
 
         if (!account || !password) {
             return res.status(400).json({ message: "Vui lòng nhập đầy đủ thông tin!" });
@@ -78,8 +86,11 @@ exports.login = async (req, res) => {
         });
 
         if (!user) {
+            console.log("User not found for account:", account);
             return res.status(404).json({ message: "Tài khoản không tồn tại!" });
         }
+
+        console.log("User found:", user.username, "Role:", user.role);
 
         // 2. Kiểm tra mật khẩu
         const isMatch = await bcrypt.compare(password, user.password);

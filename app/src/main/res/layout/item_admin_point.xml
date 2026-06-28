@@ -92,8 +92,19 @@
                 android:background="@drawable/bg_home_circle"
                 android:backgroundTint="#E8F5E9"
                 app:tint="#2E7D32"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="4dp"
                 android:contentDescription="Cộng điểm"/>
+
+            <ImageButton
+                android:id="@+id/btnMinus"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@android:drawable/ic_input_delete"
+                android:background="@drawable/bg_home_circle"
+                android:backgroundTint="#FFEBEE"
+                app:tint="#D32F2F"
+                android:layout_marginBottom="4dp"
+                android:contentDescription="Trừ điểm"/>
 
             <ImageButton
                 android:id="@+id/btnViewHistory"

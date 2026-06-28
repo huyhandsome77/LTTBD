@@ -5,7 +5,8 @@ data class RegisterRequest(
     val email: String,
     val phone: String,
     val username: String,
-    val password: String
+    val password: String,
+    val role: String
 )
 
 data class LoginRequest(

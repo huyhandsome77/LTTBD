@@ -130,6 +130,25 @@
                 android:textColorHint="#9E9E9E"
                 android:importantForAutofill="no" />
 
+            <!-- ROLE SELECTION -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_gravity="start"
+                android:text="Chọn vai trò:"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <Spinner
+                android:id="@+id/spinnerRole"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_input"
+                android:paddingHorizontal="18dp"
+                android:spinnerMode="dropdown" />
+
             <!-- REGISTER BUTTON -->
             <Button
                 android:id="@+id/btnRegister"
