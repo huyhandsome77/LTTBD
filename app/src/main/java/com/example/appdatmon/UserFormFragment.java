@@ -16,49 +16,44 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.appdatmon.data.model.UserData;
+import com.example.appdatmon.data.api.RetrofitClient;
+import com.example.appdatmon.data.model.User;
+
+import java.util.Arrays;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UserFormFragment extends Fragment {
 
-    private EditText edtFullName;
-    private EditText edtEmail;
-    private EditText edtPhone;
+    private EditText edtFullName, edtEmail, edtPhone, edtUsername, edtPassword;
+    private Spinner spinnerRole, spinnerStatus;
+    private Button btnSave, btnCancel;
+    private TextView tvBackTitle, tvTitle;
+    private Long userId = null;
 
-    private Spinner spinnerRole;
-    private Spinner spinnerStatus;
-
-    private Button btnSave;
-    private Button btnCancel;
-
-    private TextView tvBackTitle;
+    private final String[] roles = {"ADMIN", "STAFF", "KITCHEN", "CUSTOMER"};
+    private final String[] statuses = {"ACTIVE", "BLOCKED"};
 
     public UserFormFragment() {
     }
 
     @Nullable
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater,
-            @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
-
-        return inflater.inflate(
-                R.layout.fragment_user_form,
-                container,
-                false
-        );
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_user_form, container, false);
     }
 
     @Override
-    public void onViewCreated(
-            @NonNull View view,
-            @Nullable Bundle savedInstanceState) {
-
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         edtFullName = view.findViewById(R.id.edt_full_name);
         edtEmail = view.findViewById(R.id.edt_email);
         edtPhone = view.findViewById(R.id.edt_phone);
+        edtUsername = view.findViewById(R.id.edt_username);
+        edtPassword = view.findViewById(R.id.edt_password);
 
         spinnerRole = view.findViewById(R.id.spinner_role);
         spinnerStatus = view.findViewById(R.id.spinner_status);
@@ -67,114 +62,115 @@ public class UserFormFragment extends Fragment {
         btnCancel = view.findViewById(R.id.btn_cancel);
 
         tvBackTitle = view.findViewById(R.id.tv_back_title);
+        tvTitle = view.findViewById(R.id.tv_form_title);
 
-        // Spinner Role
-        String[] roles = {
-                "Admin",
-                "Nhân viên",
-                "Thu ngân"
-        };
+        setupSpinners();
 
-        ArrayAdapter<String> roleAdapter =
-                new ArrayAdapter<>(
-                        requireContext(),
-                        android.R.layout.simple_spinner_item,
-                        roles
-                );
-
-        roleAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item
-        );
-
-        spinnerRole.setAdapter(roleAdapter);
-
-        // Spinner Status
-        String[] status = {
-                "Hoạt động",
-                "Đã khóa"
-        };
-
-        ArrayAdapter<String> statusAdapter =
-                new ArrayAdapter<>(
-                        requireContext(),
-                        android.R.layout.simple_spinner_item,
-                        status
-                );
-
-        statusAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item
-        );
-
-        spinnerStatus.setAdapter(statusAdapter);
-
-        // Nếu là sửa user
         Bundle bundle = getArguments();
-
         if (bundle != null) {
+            userId = bundle.getLong("user_id", -1);
+            if (userId == -1) userId = null;
 
-            edtFullName.setText(
-                    bundle.getString("user_name", "")
-            );
+            if (userId != null) {
+                tvTitle.setText("Sửa người dùng");
+                edtFullName.setText(bundle.getString("user_name", ""));
+                edtEmail.setText(bundle.getString("user_email", ""));
+                edtPhone.setText(bundle.getString("user_phone", ""));
+                edtUsername.setText(bundle.getString("user_username", ""));
 
-            edtEmail.setText(
-                    bundle.getString("user_email", "")
-            );
+                // Set selection cho Spinner Role
+                String role = bundle.getString("user_role", "");
+                int rolePos = Arrays.asList(roles).indexOf(role.toUpperCase());
+                if (rolePos >= 0) spinnerRole.setSelection(rolePos);
 
-            edtPhone.setText(
-                    bundle.getString("user_phone", "")
-            );
+                // Set selection cho Spinner Status
+                String status = bundle.getString("user_status", "");
+                int statusPos = Arrays.asList(statuses).indexOf(status.toUpperCase());
+                if (statusPos >= 0) spinnerStatus.setSelection(statusPos);
+                
+                // Khi sửa user: Ẩn mật khẩu, hiện username (có thể sửa)
+                edtPassword.setVisibility(View.GONE);
+                view.findViewById(R.id.tv_label_password).setVisibility(View.GONE);
+                
+                edtUsername.setVisibility(View.VISIBLE); // Đảm bảo hiện username
+            }
         }
 
         btnSave.setOnClickListener(v -> saveUser());
+        btnCancel.setOnClickListener(v -> getParentFragmentManager().popBackStack());
+        tvBackTitle.setOnClickListener(v -> getParentFragmentManager().popBackStack());
+    }
 
-        btnCancel.setOnClickListener(v ->
-                getParentFragmentManager().popBackStack()
-        );
+    private void setupSpinners() {
+        ArrayAdapter<String> roleAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, roles);
+        roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRole.setAdapter(roleAdapter);
 
-        tvBackTitle.setOnClickListener(v ->
-                getParentFragmentManager().popBackStack()
-        );
+        ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, statuses);
+        statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerStatus.setAdapter(statusAdapter);
     }
 
     private void saveUser() {
+        String fullName = edtFullName.getText().toString().trim();
+        String email = edtEmail.getText().toString().trim();
+        String phone = edtPhone.getText().toString().trim();
+        String username = edtUsername.getText().toString().trim();
+        String role = spinnerRole.getSelectedItem().toString();
+        String status = spinnerStatus.getSelectedItem().toString();
 
-        String fullName =
-                edtFullName.getText().toString().trim();
-
-        String email =
-                edtEmail.getText().toString().trim();
-
-        String phone =
-                edtPhone.getText().toString().trim();
-
-        if (TextUtils.isEmpty(fullName)) {
-            edtFullName.setError("Vui lòng nhập họ tên");
+        if (TextUtils.isEmpty(fullName) || TextUtils.isEmpty(phone) || TextUtils.isEmpty(username)) {
+            Toast.makeText(requireContext(), "Vui lòng nhập đủ thông tin bắt buộc", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (TextUtils.isEmpty(email)) {
-            edtEmail.setError("Vui lòng nhập email");
-            return;
+        if (userId == null) {
+            // THÊM MỚI
+            String password = edtPassword.getText().toString().trim();
+            if (TextUtils.isEmpty(password)) {
+                Toast.makeText(requireContext(), "Vui lòng nhập mật khẩu", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            User newUser = new User(null, fullName, username, email, phone, role, status, password);
+            RetrofitClient.getUserApi().createUser(newUser).enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                    if (!isAdded()) return;
+                    if (response.isSuccessful()) {
+                        Toast.makeText(requireContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
+                        getParentFragmentManager().popBackStack();
+                    } else {
+                        Toast.makeText(requireContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                    if (!isAdded()) return;
+                    Toast.makeText(requireContext(), "Lỗi kết nối", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            // CẬP NHẬT
+            User userUpdate = new User(userId, fullName, username, email, phone, role, status, null);
+            RetrofitClient.getUserApi().updateUser(userId, userUpdate).enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                    if (!isAdded()) return;
+                    if (response.isSuccessful()) {
+                        Toast.makeText(requireContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                        getParentFragmentManager().popBackStack();
+                    } else {
+                        Toast.makeText(requireContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                    if (!isAdded()) return;
+                    Toast.makeText(requireContext(), "Lỗi kết nối", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-
-        if (TextUtils.isEmpty(phone)) {
-            edtPhone.setError("Vui lòng nhập số điện thoại");
-            return;
-        }
-
-        // Lưu dữ liệu vào UserData
-//        UserData.fullName = fullName;
-//        UserData.email = email;
-//        UserData.phone = phone;
-//        UserData.role = spinnerRole.getSelectedItem().toString();
-//        UserData.status = spinnerStatus.getSelectedItem().toString();
-
-        Toast.makeText(
-                requireContext(),
-                "Lưu người dùng thành công",
-                Toast.LENGTH_SHORT
-        ).show();
-
-        getParentFragmentManager().popBackStack();
     }
 }

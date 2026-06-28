@@ -20,7 +20,7 @@ exports.verifyToken = (req, res, next) => {
 
         const decoded = jwt.verify(
             token,
-            process.env.JWT_SECRET
+            process.env.JWT_SECRET || 'secret_key'
         );
 
         req.user = decoded;
@@ -38,7 +38,7 @@ exports.verifyToken = (req, res, next) => {
 };
 
 exports.isAdmin = (req, res, next) => {
-    if (req.user && req.user.role === "ADMIN") {
+    if (req.user && req.user.role && req.user.role.toUpperCase() === "ADMIN") {
         next();
     } else {
         return res.status(403).json({

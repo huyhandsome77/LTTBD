@@ -84,6 +84,16 @@
             android:textColorHint="#9E9E9E"
             android:importantForAutofill="no" />
 
+        <!-- REMEMBER ME -->
+        <CheckBox
+            android:id="@+id/cbRememberMe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Ghi nhớ đăng nhập"
+            android:textColor="#FFFFFF"
+            android:buttonTint="#C1121F" />
+
         <!-- LOGIN BUTTON -->
         <Button
             android:id="@+id/btnLogin"

@@ -88,7 +88,11 @@ class AdminActivity : AppCompatActivity() {
                     // Xử lý cài đặt
                 }
                 R.id.nav_logout -> {
-                    // Xử lý đăng xuất (ví dụ: quay về LoginActivity)
+                    // Xử lý đăng xuất
+                    com.example.appdatmon.data.api.AuthManager.clear(this)
+                    val intent = android.content.Intent(this, com.example.appdatmon.ui.auth.LoginActivity::class.java)
+                    intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
                     finish()
                 }
             }

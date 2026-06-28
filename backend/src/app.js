@@ -6,6 +6,9 @@ dotenv.config();
 
 const app = express();
 
+// Static Folder for Uploads
+app.use('/uploads', express.static('uploads'));
+
 // Middlewares
 app.use(cors());
 app.use(express.json());
@@ -20,10 +23,14 @@ app.get('/', (req, res) => {
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
