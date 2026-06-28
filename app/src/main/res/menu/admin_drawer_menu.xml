@@ -3,31 +3,52 @@
 
     <item android:title="QUẢN LÝ CHÍNH">
         <menu>
+
             <item
+<<<<<<< Updated upstream
+=======
+                android:id="@+id/nav_users"
+                android:icon="@drawable/ic_user"
+                android:title="Quản lý người dùng" />
+
+            <item
+>>>>>>> Stashed changes
                 android:id="@+id/nav_reviews"
                 android:icon="@android:drawable/btn_star_big_on"
                 android:title="Quản lý đánh giá" />
+
             <item
                 android:id="@+id/nav_points"
                 android:icon="@android:drawable/ic_menu_myplaces"
                 android:title="Quản lý tích điểm" />
+
             <item
                 android:id="@+id/nav_stats"
                 android:icon="@android:drawable/ic_menu_report_image"
                 android:title="Xem thống kê" />
+
+            <!-- KITCHEN -->
+            <item
+                android:id="@+id/nav_kitchen"
+                android:icon="@android:drawable/ic_menu_manage"
+                android:title="Bộ phận bếp" />
+
         </menu>
     </item>
 
     <item android:title="HỆ THỐNG">
         <menu>
+
             <item
                 android:id="@+id/nav_settings"
                 android:icon="@android:drawable/ic_menu_preferences"
                 android:title="Cài đặt hệ thống" />
+
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@android:drawable/ic_lock_power_off"
                 android:title="Đăng xuất" />
+
         </menu>
     </item>
 
