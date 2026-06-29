@@ -76,4 +76,26 @@ object RetrofitClient {
 
         retrofit.create(UploadApi::class.java)
     }
+
+    @JvmStatic
+    val tableApi: TableApi by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(TableApi::class.java)
+    }
+
+    @JvmStatic
+    val orderApi: OrderApi by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(OrderApi::class.java)
+    }
 }

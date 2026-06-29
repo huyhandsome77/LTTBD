@@ -7,6 +7,14 @@ module.exports = (sequelize) => {
             autoIncrement: true,
             primaryKey: true,
         },
+        guestName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        guestPhone: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         reservationTime: {
             type: DataTypes.DATE,
             allowNull: false,
@@ -19,13 +27,13 @@ module.exports = (sequelize) => {
             type: DataTypes.TEXT,
         },
         status: {
-            type: DataTypes.ENUM("PENDING", "CONFIRMED", "CHECKED_IN", "CANCELLED", "EXPIRED"),
+            type: DataTypes.ENUM("PENDING", "CONFIRMED", "ARRIVED", "CHECKED_IN", "CANCELLED", "EXPIRED"),
             defaultValue: "PENDING",
         },
     }, {
         tableName: 'reservations',
         timestamps: true,
         createdAt: 'created_at',
-        updatedAt: false,
+        updatedAt: 'updated_at',
     });
 };

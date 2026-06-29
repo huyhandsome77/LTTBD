@@ -12,6 +12,7 @@ import com.example.appdatmon.QuanLyBanFragment
 import com.example.appdatmon.QuanLyDanhMucSanPhamFragment
 import com.example.appdatmon.R
 import com.example.appdatmon.UserListFragment
+import com.example.appdatmon.data.api.AuthManager
 import com.google.android.material.navigation.NavigationView
 
 class AdminActivity : AppCompatActivity() {
@@ -37,14 +38,12 @@ class AdminActivity : AppCompatActivity() {
             }
         }
 
-        // Bottom Navigation Buttons
-        val btnProduct = findViewById<View>(R.id.btn_menu_product)
-        val btnTable = findViewById<View>(R.id.btn_menu_table)
-        val btnUser = findViewById<View>(R.id.btn_menu_user)
-        val btnOrder = findViewById<View>(R.id.btn_menu_order)
+        // Setup Drawer Header
+        val headerView = navView.getHeaderView(0)
+        val tvAdminName = headerView.findViewById<TextView>(R.id.tvAdminName)
+        tvAdminName?.text = AuthManager.getUserName(this) ?: "Administrator"
 
         // Xử lý nút tắt Menu trong Header
-        val headerView = navView.getHeaderView(0)
         val btnCloseMenu = headerView.findViewById<ImageView>(R.id.btnCloseMenu)
         btnCloseMenu.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -67,7 +66,7 @@ class AdminActivity : AppCompatActivity() {
                 }
                 R.id.nav_reviews -> {
                     tvTitle.text = "Quản lý đánh giá"
-                    tvHomeWelcome.visibility = View.GONE // Ẩn chữ chào mừng trang chủ
+                    tvHomeWelcome.visibility = View.GONE
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.content_container, AdminReviewsFragment())
                         .commit()
@@ -75,21 +74,17 @@ class AdminActivity : AppCompatActivity() {
                 R.id.nav_points -> {
                     tvTitle.text = "Quản lý tích điểm"
                     tvHomeWelcome.visibility = View.GONE
-                    // supportFragmentManager.beginTransaction().replace(R.id.content, AdminPointsFragment()).commit()
                 }
                 R.id.nav_stats -> {
                     tvTitle.text = "Xem thống kê"
                     tvHomeWelcome.visibility = View.GONE
-                    // supportFragmentManager.beginTransaction().replace(R.id.content, AdminStatsFragment()).commit()
                 }
                 R.id.nav_settings -> {
                     tvTitle.text = "Cài đặt"
                     tvHomeWelcome.visibility = View.GONE
-                    // Xử lý cài đặt
                 }
                 R.id.nav_logout -> {
-                    // Xử lý đăng xuất
-                    com.example.appdatmon.data.api.AuthManager.clear(this)
+                    AuthManager.clear(this)
                     val intent = android.content.Intent(this, com.example.appdatmon.ui.auth.LoginActivity::class.java)
                     intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
@@ -104,7 +99,6 @@ class AdminActivity : AppCompatActivity() {
         homeButton.setOnClickListener {
             tvTitle.text = "Trang chủ"
             tvHomeWelcome.visibility = View.VISIBLE
-            // Gỡ bỏ fragment hiện tại nếu có để hiện lại nội dung trang chủ
             val fragment = supportFragmentManager.findFragmentById(R.id.content_container)
             if (fragment != null) {
                 supportFragmentManager.beginTransaction().remove(fragment).commit()
@@ -112,7 +106,7 @@ class AdminActivity : AppCompatActivity() {
         }
 
         // Xử lý Bottom Navigation
-        btnProduct?.setOnClickListener {
+        findViewById<View>(R.id.btn_menu_product)?.setOnClickListener {
             tvTitle.text = "Quản lý sản phẩm"
             tvHomeWelcome.visibility = View.GONE
             supportFragmentManager.beginTransaction()
@@ -120,7 +114,7 @@ class AdminActivity : AppCompatActivity() {
                 .commit()
         }
 
-        btnTable?.setOnClickListener {
+        findViewById<View>(R.id.btn_menu_table)?.setOnClickListener {
             tvTitle.text = "Quản lý bàn"
             tvHomeWelcome.visibility = View.GONE
             supportFragmentManager.beginTransaction()
@@ -128,7 +122,7 @@ class AdminActivity : AppCompatActivity() {
                 .commit()
         }
 
-        btnUser?.setOnClickListener {
+        findViewById<View>(R.id.btn_menu_user)?.setOnClickListener {
             tvTitle.text = "Quản lý người dùng"
             tvHomeWelcome.visibility = View.GONE
             supportFragmentManager.beginTransaction()
@@ -136,7 +130,7 @@ class AdminActivity : AppCompatActivity() {
                 .commit()
         }
 
-        btnOrder?.setOnClickListener {
+        findViewById<View>(R.id.btn_menu_order)?.setOnClickListener {
             tvTitle.text = "Quản lý đơn hàng"
             tvHomeWelcome.visibility = View.GONE
             supportFragmentManager.beginTransaction()
