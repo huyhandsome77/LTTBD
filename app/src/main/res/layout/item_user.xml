@@ -10,10 +10,13 @@
     android:layout_marginBottom="2dp">
 
     <ImageView
-        android:id="@+id/ivProductImage"
+        android:id="@+id/imgUserAvatar"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@android:drawable/ic_menu_gallery"
+        android:src="@drawable/ic_user"
+        android:padding="8dp"
+        android:background="@drawable/bg_home_circle"
+        app:tint="#FFFFFF"
         android:scaleType="centerCrop"/>
 
     <LinearLayout
@@ -24,29 +27,41 @@
         android:layout_marginStart="12dp">
 
         <TextView
-            android:id="@+id/tvProductName"
+            android:id="@+id/tvUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tên món ăn"
+            android:text="Tên người dùng"
             android:textColor="@android:color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvProductPrice"
+            android:id="@+id/tvUserEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="50.000 đ"
-            android:textColor="#E53935"
-            android:textSize="13sp"
+            android:text="Email"
+            android:textColor="#666666"
+            android:textSize="12sp"
             android:layout_marginTop="2dp" />
 
         <TextView
-            android:id="@+id/tvProductStatus"
+            android:id="@+id/tvUserRole"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sẵn sàng"
-            android:textSize="11sp"
+            android:text="Vai trò"
+            android:textSize="10sp"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="2dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_status_active"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvUserStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trạng thái"
+            android:textSize="10sp"
             android:paddingHorizontal="6dp"
             android:paddingVertical="2dp"
             android:layout_marginTop="4dp"
@@ -60,7 +75,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/ivEditProduct"
+            android:id="@+id/btnEditUser"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="12dp"
@@ -68,10 +83,10 @@
             app:tint="#000000" />
 
         <ImageView
-            android:id="@+id/ivDeleteProduct"
+            android:id="@+id/btnDeleteUser"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@android:drawable/ic_menu_delete"
-            app:tint="#E53935" />
+            app:tint="@color/btn_delete" />
     </LinearLayout>
 </LinearLayout>

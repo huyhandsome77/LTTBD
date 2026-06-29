@@ -29,6 +29,14 @@ module.exports = (sequelize) => {
             type: DataTypes.BOOLEAN,
             defaultValue: true,
         },
+        category_id: {
+            type: DataTypes.BIGINT,
+            allowNull: false,
+            references: {
+                model: 'categories',
+                key: 'id'
+            }
+        },
     }, {
         tableName: 'products',
         timestamps: true,

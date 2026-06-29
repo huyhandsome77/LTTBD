@@ -4,6 +4,10 @@
     <item android:title="QUẢN LÝ CHÍNH">
         <menu>
             <item
+                android:id="@+id/nav_users"
+                android:icon="@drawable/ic_user"
+                android:title="Quản lý người dùng" />
+            <item
                 android:id="@+id/nav_reviews"
                 android:icon="@android:drawable/btn_star_big_on"
                 android:title="Quản lý đánh giá" />

@@ -51,17 +51,53 @@
             android:text="Thêm món ăn mới   +"
             android:textColor="@android:color/white"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textAllCaps="false" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="8dp"
-            android:text="Danh sách món ăn"
-            android:textColor="@android:color/black"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvLabelList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:text="Danh sách món ăn"
+                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edtSearchProduct"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="Tìm món ăn"
+                    android:textSize="11sp"
+                    android:textColorHint="#999999"
+                    android:gravity="end"
+                    android:layout_marginEnd="4dp"
+                    android:inputType="text" />
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@android:drawable/ic_menu_search"/>
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvProducts"

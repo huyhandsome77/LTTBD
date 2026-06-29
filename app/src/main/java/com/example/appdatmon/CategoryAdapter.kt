@@ -1,16 +1,21 @@
 package com.example.appdatmon
 
-import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.appdatmon.ui.admin.ChiTietDanhMucActivity
+import com.example.appdatmon.data.model.Category
+import com.example.appdatmon.ui.admin.ChiTietDanhMucFragment
 
-class CategoryAdapter(private val categoryList: List<Category>) :
-    RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+class CategoryAdapter(
+    private val categoryList: List<Category>,
+    private val onEdit: (Category) -> Unit,
+    private val onDelete: (Category) -> Unit
+) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvCatCode: TextView = itemView.findViewById(R.id.tvCatCode)
@@ -28,20 +33,27 @@ class CategoryAdapter(private val categoryList: List<Category>) :
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val category = categoryList[position]
-        holder.tvCatCode.text = category.id
+        
+        holder.tvCatCode.text = category.id?.toString() ?: "-"
         holder.tvCatName.text = category.name
-        holder.tvCatCount.text = category.count.toString()
-        //Khi click vào bất kỳ vị trí nào trên dòng danh mục
+        holder.tvCatCount.text = category.productCount.toString()
+
         holder.itemView.setOnClickListener {
-            val context = holder.itemView.context
-            // Tạo lệnh chuyển từ màn hình hiện tại sang màn hình Chi Tiết Danh Mục
-            val intent = Intent(context, ChiTietDanhMucActivity::class.java)
-            intent.putExtra("CATEGORY_NAME", category.name)
-            context.startActivity(intent)
+            val activity = holder.itemView.context as? AppCompatActivity
+            val fragment = ChiTietDanhMucFragment()
+            val bundle = Bundle()
+            bundle.putLong("CATEGORY_ID", category.id ?: -1L)
+            bundle.putString("CATEGORY_NAME", category.name)
+            fragment.arguments = bundle
+
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.content_container, fragment)
+                ?.addToBackStack(null)
+                ?.commit()
         }
 
-        holder.ivEdit.setOnClickListener { /* Xử lý sửa */ }
-        holder.ivDelete.setOnClickListener { /* Xử lý xóa */ }
+        holder.ivEdit.setOnClickListener { onEdit(category) }
+        holder.ivDelete.setOnClickListener { onDelete(category) }
     }
 
     override fun getItemCount(): Int = categoryList.size

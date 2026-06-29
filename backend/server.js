@@ -9,8 +9,8 @@ const PORT = process.env.PORT || 3000;
 // Connect to Database and sync models
 connectDB();
 
-// alter: true sẽ cập nhật cấu trúc bảng mà không làm mất dữ liệu cũ
-sequelize.sync({ alter: true }).then(() => {
+// Đồng bộ database. Lưu ý: tránh lạm dụng { alter: true } vì MySQL giới hạn 64 indexes (keys)
+sequelize.sync().then(() => {
     console.log('Database synced');
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
