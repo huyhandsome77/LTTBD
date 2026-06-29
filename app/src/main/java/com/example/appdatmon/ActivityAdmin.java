@@ -66,6 +66,9 @@ public class ActivityAdmin extends AppCompatActivity {
             } else if (id == R.id.nav_reviews) {
                 updateUI("Quản lý đánh giá");
                 loadFragment(new AdminReviewsFragment());
+            } else if (id == R.id.nav_kitchen) {
+                updateUI("Bộ phận bếp");
+                loadFragment(new com.example.appdatmon.ui.admin.KitchenFragment());
             } else if (id == R.id.nav_logout) {
                 AuthManager.INSTANCE.clear(this);
                 Intent intent = new Intent(this, LoginActivity.class);

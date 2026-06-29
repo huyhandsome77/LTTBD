@@ -25,12 +25,14 @@ const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const kitchenRoutes = require('./routes/kitchenRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/kitchen', kitchenRoutes);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {

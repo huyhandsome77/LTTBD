@@ -82,6 +82,13 @@ class AdminActivity : AppCompatActivity() {
                     tvHomeWelcome.visibility = View.GONE
                     // supportFragmentManager.beginTransaction().replace(R.id.content, AdminStatsFragment()).commit()
                 }
+                R.id.nav_kitchen -> {
+                    tvTitle.text = "Bộ phận bếp"
+                    tvHomeWelcome.visibility = View.GONE
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.content_container, KitchenFragment())
+                        .commit()
+                }
                 R.id.nav_settings -> {
                     tvTitle.text = "Cài đặt"
                     tvHomeWelcome.visibility = View.GONE

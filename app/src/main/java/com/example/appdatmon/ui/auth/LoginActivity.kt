@@ -109,6 +109,9 @@ class LoginActivity : AppCompatActivity() {
         if ("ADMIN".equals(role, ignoreCase = true)) {
             val intent = Intent(this, com.example.appdatmon.ui.admin.AdminActivity::class.java)
             startActivity(intent)
+        } else if ("KITCHEN".equals(role, ignoreCase = true)) {
+            val intent = Intent(this, com.example.appdatmon.ui.kitchen.KitchenActivity::class.java)
+            startActivity(intent)
         } else {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

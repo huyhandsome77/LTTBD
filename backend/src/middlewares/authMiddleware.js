@@ -46,3 +46,13 @@ exports.isAdmin = (req, res, next) => {
         });
     }
 };
+
+exports.isKitchenOrAdmin = (req, res, next) => {
+    if (req.user && req.user.role && (req.user.role.toUpperCase() === "KITCHEN" || req.user.role.toUpperCase() === "ADMIN")) {
+        next();
+    } else {
+        return res.status(403).json({
+            message: "Access denied. Kitchen staff or Admin only."
+        });
+    }
+};

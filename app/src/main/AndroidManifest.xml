@@ -43,6 +43,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".ui.kitchen.KitchenActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ActivityAdmin"
             android:exported="false" />
 

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F6F8"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Form Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="THÊM MÓN THỬ NGHIỆM (KITCHEN)"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Table Input -->
+    <EditText
+        android:id="@+id/edtTable"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_input_light"
+        android:hint="Nhập tên bàn"
+        android:paddingHorizontal="12dp"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:textColorHint="#888888"
+        android:layout_marginBottom="8dp"
+        android:inputType="text" />
+
+    <!-- Food Input -->
+    <EditText
+        android:id="@+id/edtFoodName"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_input_light"
+        android:hint="Nhập tên món ăn"
+        android:paddingHorizontal="12dp"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:textColorHint="#888888"
+        android:layout_marginBottom="8dp"
+        android:inputType="text" />
+
+    <!-- Quantity Input -->
+    <EditText
+        android:id="@+id/edtQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_input_light"
+        android:hint="Nhập số lượng"
+        android:paddingHorizontal="12dp"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:textColorHint="#888888"
+        android:layout_marginBottom="12dp"
+        android:inputType="number" />
+
+    <!-- Green Submit Button -->
+    <Button
+        android:id="@+id/btnSubmitTestItem"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:backgroundTint="#4CAF50"
+        android:text="Thêm món vào bếp"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD"
+        android:layout_marginBottom="16dp" />
+
+    <!-- List Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DANH SÁCH MÓN CHỜ CHẾ BIẾN"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Active List -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvKitchenItems"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_kitchen_fragment_order" />
+
+        <TextView
+            android:id="@+id/tvEmptyState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Không có món nào chờ chế biến"
+            android:textColor="#999999"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+</LinearLayout>

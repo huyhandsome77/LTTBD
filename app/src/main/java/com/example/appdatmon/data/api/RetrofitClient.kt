@@ -76,4 +76,15 @@ object RetrofitClient {
 
         retrofit.create(UploadApi::class.java)
     }
+
+    @JvmStatic
+    val kitchenApi: KitchenApi by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(KitchenApi::class.java)
+    }
 }
