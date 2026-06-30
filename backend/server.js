@@ -18,12 +18,6 @@ connectDB();
 sequelize.sync().then(async () => {
     console.log('Database synced');
 
-    // Seed dữ liệu mẫu theo thứ tự
-    await seedTables();
-    await seedProducts();
-    await seedReservations();
-    await seedOrders();
-
     // Khởi động dọn dẹp đặt bàn quá hạn
     startCleanupTask();
 

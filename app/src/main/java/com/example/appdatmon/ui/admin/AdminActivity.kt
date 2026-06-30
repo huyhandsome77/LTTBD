@@ -11,6 +11,7 @@ import com.example.appdatmon.OrderListFragment
 import com.example.appdatmon.QuanLyBanFragment
 import com.example.appdatmon.QuanLyDanhMucSanPhamFragment
 import com.example.appdatmon.R
+import com.example.appdatmon.ReservationListFragment
 import com.example.appdatmon.UserListFragment
 import com.example.appdatmon.data.api.AuthManager
 import com.google.android.material.navigation.NavigationView
@@ -74,6 +75,13 @@ class AdminActivity : AppCompatActivity() {
                 R.id.nav_points -> {
                     tvTitle.text = "Quản lý tích điểm"
                     tvHomeWelcome.visibility = View.GONE
+                }
+                R.id.nav_reservations -> {
+                    tvTitle.text = "Lịch sử đặt bàn"
+                    tvHomeWelcome.visibility = View.GONE
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.content_container, ReservationListFragment())
+                        .commit()
                 }
                 R.id.nav_stats -> {
                     tvTitle.text = "Xem thống kê"

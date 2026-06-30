@@ -98,4 +98,15 @@ object RetrofitClient {
 
         retrofit.create(OrderApi::class.java)
     }
+
+    @JvmStatic
+    val reservationApi: ReservationApi by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(ReservationApi::class.java)
+    }
 }

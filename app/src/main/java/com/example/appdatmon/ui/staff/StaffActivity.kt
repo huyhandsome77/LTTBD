@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.example.appdatmon.OrderListFragment
 import com.example.appdatmon.QuanLyBanFragment
 import com.example.appdatmon.R
+import com.example.appdatmon.ReservationListFragment
 import com.example.appdatmon.data.api.AuthManager
 import com.example.appdatmon.ui.auth.LoginActivity
 import com.google.android.material.navigation.NavigationView
@@ -68,6 +69,7 @@ class StaffActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_order -> openOrder()
                 R.id.nav_table -> openTable()
+                R.id.nav_reservations -> openReservations()
                 R.id.nav_points -> openPoints()
                 R.id.nav_profile -> {
                     // Logic mở thông tin cá nhân
@@ -98,6 +100,12 @@ class StaffActivity : AppCompatActivity() {
         tvTitle.text = "Quản lý bàn"
         tvHomeWelcome.visibility = View.GONE
         loadFragment(QuanLyBanFragment())
+    }
+
+    private fun openReservations() {
+        tvTitle.text = "Lịch sử đặt bàn"
+        tvHomeWelcome.visibility = View.GONE
+        loadFragment(ReservationListFragment())
     }
 
     private fun openOrder() {

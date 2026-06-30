@@ -1,4 +1,100 @@
-const { Order, OrderItem, Product, RestaurantTable, sequelize } = require('../models');
+const { Order, OrderItem, Product, RestaurantTable, User, sequelize } = require('../models');
+
+/**
+ * Lấy tất cả đơn hàng (có phân trang và lọc)
+ */
+exports.getAllOrders = async (req, res, next) => {
+    try {
+        const { status, paymentStatus } = req.query;
+        const whereClause = {};
+        if (status) whereClause.status = status;
+        if (paymentStatus) whereClause.paymentStatus = paymentStatus;
+
+        const orders = await Order.findAll({
+            where: whereClause,
+            include: [
+                { model: RestaurantTable, as: 'RestaurantTable' },
+                { model: User, attributes: ['id', 'fullName', 'phone'] },
+                {
+                    model: OrderItem,
+                    include: [{ model: Product }]
+                }
+            ],
+            order: [['created_at', 'DESC']]
+        });
+        res.json(orders);
+    } catch (error) {
+        next(error);
+    }
+};
+
+/**
+ * Lấy chi tiết một đơn hàng
+ */
+exports.getOrderById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const order = await Order.findByPk(id, {
+            include: [
+                { model: RestaurantTable, as: 'RestaurantTable' },
+                { model: User, attributes: ['id', 'fullName', 'phone'] },
+                {
+                    model: OrderItem,
+                    include: [{ model: Product }]
+                }
+            ]
+        });
+
+        if (!order) {
+            return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+        }
+        res.json(order);
+    } catch (error) {
+        next(error);
+    }
+};
+
+/**
+ * Cập nhật trạng thái đơn hàng
+ */
+exports.updateOrderStatus = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { status, paymentStatus } = req.body;
+
+        const order = await Order.findByPk(id);
+        if (!order) {
+            return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+        }
+
+        const updateData = {};
+        if (status) updateData.status = status;
+        if (paymentStatus) updateData.paymentStatus = paymentStatus;
+
+        await order.update(updateData);
+        res.json({ message: "Cập nhật đơn hàng thành công", data: order });
+    } catch (error) {
+        next(error);
+    }
+};
+
+/**
+ * Xóa đơn hàng (thường là Soft Delete hoặc chỉ cho phép xóa khi PENDING/CANCELLED)
+ */
+exports.deleteOrder = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const order = await Order.findByPk(id);
+        if (!order) {
+            return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+        }
+
+        await order.destroy();
+        res.json({ message: "Xóa đơn hàng thành công" });
+    } catch (error) {
+        next(error);
+    }
+};
 
 /**
  * Lấy hóa đơn hiện tại của một bàn
@@ -57,13 +153,13 @@ exports.payOrder = async (req, res, next) => {
         // Cập nhật trạng thái bàn về CLEANING (đang dọn dẹp) hoặc AVAILABLE
         if (order.table_id) {
             await RestaurantTable.update(
-                { status: 'CLEANING' },
+                { status: 'AVAILABLE' }, // Chuyển về Trống luôn cho tiện test
                 { where: { id: order.table_id }, transaction: t }
             );
         }
 
         await t.commit();
-        res.json({ message: "Thanh toán thành công. Bàn hiện đang được dọn dẹp." });
+        res.json({ message: "Thanh toán thành công. Bàn hiện đã sẵn sàng." });
     } catch (error) {
         await t.rollback();
         next(error);

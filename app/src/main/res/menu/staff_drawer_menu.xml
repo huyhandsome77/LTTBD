@@ -12,6 +12,10 @@
                 android:icon="@drawable/ic_table"
                 android:title="Quản lý bàn" />
             <item
+                android:id="@+id/nav_reservations"
+                android:icon="@android:drawable/ic_menu_today"
+                android:title="Lịch sử đặt bàn" />
+            <item
                 android:id="@+id/nav_points"
                 android:icon="@android:drawable/ic_menu_myplaces"
                 android:title="Quản lý tích điểm" />
