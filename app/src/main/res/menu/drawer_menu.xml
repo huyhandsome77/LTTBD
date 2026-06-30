@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- ACCOUNT -->
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/ic_user"
+            android:title="ĐĂNG NHẬP"/>
+
+    </group>
+
+    <!-- Divider -->
+
+    <item
+        android:title="────────────────"/>
+
+    <!-- GIỚI THIỆU -->
+
+    <item
+        android:id="@+id/nav_story"
+        android:icon="@drawable/ic_story"
+        android:title="Câu chuyện FutureSuShi"/>
+
+    <item
+        android:id="@+id/nav_chef"
+        android:icon="@drawable/ic_chef"
+        android:title="Đội ngũ đầu bếp"/>
+
+    <item
+        android:id="@+id/nav_food"
+        android:icon="@drawable/ic_fresh"
+        android:title="Thực phẩm tươi sống"/>
+
+    <item
+        android:id="@+id/nav_space"
+        android:icon="@drawable/ic_restaurant"
+        android:title="Không gian quán"/>
+
+    <item
+        android:id="@+id/nav_contact"
+        android:icon="@drawable/ic_phone"
+        android:title="Liên hệ"/>
+
+</menu>

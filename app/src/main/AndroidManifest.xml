@@ -3,7 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.appdatmon">
 
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Camera -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +24,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
+        <!-- Launcher -->
         <activity
             android:name=".ui.auth.LoginActivity"
             android:exported="true">
@@ -26,6 +34,7 @@
             </intent-filter>
         </activity>
 
+        <!-- Huy -->
         <activity
             android:name=".ui.admin.AdminActivity"
             android:exported="false" />
@@ -48,6 +57,58 @@
 
         <activity
             android:name=".ActivityAdmin"
+            android:exported="false" />
+
+        <!-- Thinh -->
+        <activity
+            android:name=".BookingActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ScanQRActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".MenuActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CartActivity"
+            android:exported="false" />
+
+        <!-- Nếu Thinh có LoginActivity khác thì giữ lại,
+             nếu trùng chức năng với ui.auth.LoginActivity thì nên xóa -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".review.ReviewActivity"
+            android:exported="false" />
+
+        <!-- Menu -->
+        <activity
+            android:name=".StoryActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ChefActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".FoodActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SpaceActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ContactActivity"
             android:exported="false" />
 
     </application>
