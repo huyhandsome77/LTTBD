@@ -39,7 +39,19 @@
             android:text="50.000 đ"
             android:textColor="#E53935"
             android:textSize="13sp"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/tvProductStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sẵn sàng"
+            android:textSize="11sp"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="2dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_status_active"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <LinearLayout

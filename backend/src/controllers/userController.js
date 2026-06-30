@@ -5,7 +5,22 @@ const { Op } = require('sequelize');
 // 1. Lấy danh sách tất cả người dùng
 const getAllUsers = async (req, res) => {
     try {
+        const { search } = req.query;
+        let where = {};
+
+        if (search) {
+            where = {
+                [Op.or]: [
+                    { fullName: { [Op.like]: `%${search}%` } },
+                    { username: { [Op.like]: `%${search}%` } },
+                    { email: { [Op.like]: `%${search}%` } },
+                    { phone: { [Op.like]: `%${search}%` } }
+                ]
+            };
+        }
+
         const users = await User.findAll({
+            where,
             attributes: { exclude: ['password'] }
         });
         res.json(users);
@@ -93,7 +108,7 @@ const createUser = async (req, res) => {
 // 5. Cập nhật thông tin người dùng
 const updateUser = async (req, res) => {
     try {
-        const { fullName, email, phone, avatar, points, role, status } = req.body;
+        const { fullName, email, phone, username, avatar, points, role, status } = req.body;
         const user = await User.findByPk(req.params.id);
 
         if (!user) {
@@ -105,6 +120,7 @@ const updateUser = async (req, res) => {
             fullName: fullName || user.fullName,
             email: email || user.email,
             phone: phone || user.phone,
+            username: username || user.username,
             avatar: avatar || user.avatar,
             points: points !== undefined ? points : user.points,
             role: role || user.role,

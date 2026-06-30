@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="NGHIỆP VỤ NHÂN VIÊN">
+        <menu>
+            <item
+                android:id="@+id/nav_order"
+                android:icon="@drawable/ic_bill"
+                android:title="Quản lý đơn hàng" />
+            <item
+                android:id="@+id/nav_table"
+                android:icon="@drawable/ic_table"
+                android:title="Quản lý bàn" />
+            <item
+                android:id="@+id/nav_reservations"
+                android:icon="@android:drawable/ic_menu_today"
+                android:title="Lịch sử đặt bàn" />
+            <item
+                android:id="@+id/nav_points"
+                android:icon="@android:drawable/ic_menu_myplaces"
+                android:title="Quản lý tích điểm" />
+        </menu>
+    </item>
+
+    <item android:title="TÀI KHOẢN">
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_user"
+                android:title="Thông tin cá nhân" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@android:drawable/ic_lock_power_off"
+                android:title="Đăng xuất" />
+        </menu>
+    </item>
+
+</menu>

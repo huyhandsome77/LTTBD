@@ -1,17 +1,38 @@
 package com.example.appdatmon;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class UserListFragment extends Fragment {
+import com.example.appdatmon.data.api.RetrofitClient;
+import com.example.appdatmon.data.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class UserListFragment extends Fragment implements UserAdapter.OnUserActionListener {
+
+    private RecyclerView rvUsers;
+    private UserAdapter adapter;
+    private EditText edtSearch;
+    private List<User> userList = new ArrayList<>();
 
     public UserListFragment() {
     }
@@ -37,117 +58,131 @@ public class UserListFragment extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
+        rvUsers = view.findViewById(R.id.rvUsers);
+        rvUsers.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new UserAdapter(userList, this);
+        rvUsers.setAdapter(adapter);
+
+        edtSearch = view.findViewById(R.id.edtSearch);
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                loadUsers(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
         // Thêm User
         View btnAddUser = view.findViewById(R.id.btn_add_user);
-
         if (btnAddUser != null) {
             btnAddUser.setOnClickListener(v -> {
-
-                UserFormFragment formFragment =
-                        new UserFormFragment();
-
+                UserFormFragment formFragment = new UserFormFragment();
                 getParentFragmentManager()
                         .beginTransaction()
-                        .replace(
-                                R.id.content_container,
-                                formFragment
-                        )
+                        .replace(R.id.content_container, formFragment)
                         .addToBackStack(null)
                         .commit();
             });
         }
 
-        // Sửa User A
-        View btnEditA = view.findViewById(R.id.btnEditA);
+        loadUsers("");
+    }
 
-        if (btnEditA != null) {
-
-            btnEditA.setOnClickListener(v -> {
-
-                Bundle bundle = new Bundle();
-
-                bundle.putString(
-                        "user_name",
-                        "Nguyễn Văn A"
-                );
-
-                bundle.putString(
-                        "user_email",
-                        "admin@gmail.com"
-                );
-
-                bundle.putString(
-                        "user_phone",
-                        "037990279"
-                );
-
-                UserFormFragment formFragment =
-                        new UserFormFragment();
-
-                formFragment.setArguments(bundle);
-
-                getParentFragmentManager()
-                        .beginTransaction()
-                        .replace(
-                                R.id.content_container,
-                                formFragment
-                        )
-                        .addToBackStack(null)
-                        .commit();
-            });
-        }
-
-        // Xóa User A
-        View btnDeleteA = view.findViewById(R.id.btnDeleteA);
-
-        if (btnDeleteA != null) {
-
-            btnDeleteA.setOnClickListener(v -> {
-
-                View userCard =
-                        view.findViewById(R.id.userA);
-
-                if (userCard != null) {
-                    userCard.setVisibility(View.GONE);
+    private void loadUsers(String query) {
+        RetrofitClient.getUserApi().getAllUsers(query).enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if (!isAdded()) return;
+                if (response.isSuccessful() && response.body() != null) {
+                    userList = response.body();
+                    adapter.updateData(userList);
+                } else {
+                    String errorMsg = "Lỗi " + response.code();
+                    try {
+                        if (response.errorBody() != null) {
+                            errorMsg += ": " + response.errorBody().string();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Log.e("UserListFragment", "Error loading users: " + errorMsg);
+                    Toast.makeText(requireContext(), "Lỗi tải danh sách người dùng (" + response.code() + ")", Toast.LENGTH_SHORT).show();
                 }
-            });
-        }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                if (!isAdded()) return;
+                Log.e("UserListFragment", "onFailure: " + t.getMessage());
+                Toast.makeText(requireContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onEdit(User user) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("user_id", user.getId());
+        bundle.putString("user_name", user.getFullName());
+        bundle.putString("user_email", user.getEmail());
+        bundle.putString("user_phone", user.getPhone());
+        bundle.putString("user_username", user.getUsername());
+        bundle.putString("user_role", user.getRole());
+        bundle.putString("user_status", user.getStatus());
+
+        UserFormFragment formFragment = new UserFormFragment();
+        formFragment.setArguments(bundle);
+
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_container, formFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onDelete(User user) {
+        if (user.getId() == null) return;
+
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Xác nhận xóa")
+                .setMessage("Bạn có chắc chắn muốn xóa người dùng '" + user.getFullName() + "'?")
+                .setPositiveButton("Xóa", (dialog, which) -> performDelete(user.getId()))
+                .setNegativeButton("Hủy", null)
+                .show();
+    }
+
+    private void performDelete(long userId) {
+        RetrofitClient.getUserApi().deleteUser(userId).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (!isAdded()) return;
+                if (response.isSuccessful()) {
+                    Toast.makeText(requireContext(), "Xóa thành công", Toast.LENGTH_SHORT).show();
+                    loadUsers(edtSearch != null ? edtSearch.getText().toString() : "");
+                } else {
+                    Toast.makeText(requireContext(), "Xóa thất bại (" + response.code() + ")", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                if (!isAdded()) return;
+                Toast.makeText(requireContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        View root = getView();
-
-        if (root == null) return;
-
-        LinearLayout userNew =
-                root.findViewById(R.id.userNew);
-
-        TextView tvName =
-                root.findViewById(R.id.tvNewName);
-
-        TextView tvEmail =
-                root.findViewById(R.id.tvNewEmail);
-
-        TextView tvRole =
-                root.findViewById(R.id.tvNewRole);
-
-        if (userNew == null ||
-                tvName == null ||
-                tvEmail == null ||
-                tvRole == null) {
-            return;
-        }
-
-        if (!UserData.fullName.isEmpty()) {
-
-            userNew.setVisibility(View.VISIBLE);
-
-            tvName.setText(UserData.fullName);
-            tvEmail.setText(UserData.email);
-            tvRole.setText(UserData.role);
+        if (edtSearch != null) {
+            loadUsers(edtSearch.getText().toString());
         }
     }
 }
