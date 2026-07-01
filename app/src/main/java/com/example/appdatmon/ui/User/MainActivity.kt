@@ -1,4 +1,4 @@
-package com.example.futuresushi
+package com.example.appdatmon
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import com.example.futuresushi.LoginActivity
-import com.example.futuresushi.review.ReviewActivity
+import com.example.appdatmon.ui.auth.LoginActivity
+import com.example.appdatmon.review.ReviewActivity
 class MainActivity : AppCompatActivity() {
 
     lateinit var drawerLayout: DrawerLayout

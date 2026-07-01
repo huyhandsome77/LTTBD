@@ -1,4 +1,4 @@
-package com.example.futuresushi
+package com.example.appdatmon
 
 import android.os.Bundle
 import android.widget.ImageView

@@ -96,3 +96,23 @@ exports.updateTableStatus = async (req, res, next) => {
         next(error);
     }
 };
+
+/**
+ * Lấy thông tin bàn bằng mã QR
+ */
+exports.getTableByQRCode = async (req, res, next) => {
+    try {
+        const { qrCode } = req.params;
+        const table = await RestaurantTable.findOne({
+            where: { qrCode }
+        });
+
+        if (!table) {
+            return res.status(404).json({ message: "Không tìm thấy bàn với mã QR này" });
+        }
+
+        res.json(table);
+    } catch (error) {
+        next(error);
+    }
+};

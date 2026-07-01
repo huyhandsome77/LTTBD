@@ -1,4 +1,4 @@
-package com.example.futuresushi
+package com.example.appdatmon
 
 import android.Manifest
 import android.content.Intent
@@ -55,14 +55,11 @@ class ScanQRActivity : AppCompatActivity() {
 
         override fun barcodeResult(result: BarcodeResult?) {
 
-            result?.text ?: return
+            val qrToken = result?.text ?: return
 
-            startActivity(
-                Intent(
-                    this@ScanQRActivity,
-                    MenuActivity::class.java
-                )
-            )
+            val intent = Intent(this@ScanQRActivity, MenuActivity::class.java)
+            intent.putExtra("QR_CODE", qrToken)
+            startActivity(intent)
 
             finish()
 

@@ -58,6 +58,16 @@
                 android:textColor="#F5F5F5"
                 android:textSize="12sp"/>
 
+            <TextView
+                android:id="@+id/tvCartTableInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bàn: --"
+                android:textColor="#E50914"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:visibility="gone"/>
+
         </LinearLayout>
 
     </LinearLayout>
@@ -227,6 +237,7 @@
         <!-- BUTTON -->
 
         <Button
+            android:id="@+id/btnOrder"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginTop="16dp"

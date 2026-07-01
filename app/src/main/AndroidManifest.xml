@@ -76,11 +76,6 @@
             android:name=".CartActivity"
             android:exported="false" />
 
-        <!-- Nếu Thinh có LoginActivity khác thì giữ lại,
-             nếu trùng chức năng với ui.auth.LoginActivity thì nên xóa -->
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
 
         <activity
             android:name=".ProfileActivity"

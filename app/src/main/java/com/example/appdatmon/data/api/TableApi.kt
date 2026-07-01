@@ -10,6 +10,9 @@ interface TableApi {
 
     @PUT("api/tables/{id}/status")
     fun updateStatus(@Path("id") id: Long, @Body status: Map<String, String>): Call<Void>
+
+    @GET("api/tables/qr/{qrCode}")
+    fun getTableByQRCode(@Path("qrCode") qrCode: String): Call<TableResponse>
 }
 
 data class TableResponse(
