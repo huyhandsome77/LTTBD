@@ -63,13 +63,16 @@ class LoginActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val body = response.body()
                         val token = body?.token
-                        val role = body?.user?.role
+                        val user = body?.user
+                        val role = user?.role
+                        val fullName = user?.fullName
                         
                         if (cbRememberMe.isChecked) {
-                            AuthManager.saveAuth(this@LoginActivity, token, role)
+                            AuthManager.saveAuth(this@LoginActivity, token, role, fullName)
                         } else {
                             AuthManager.token = token
                             AuthManager.role = role
+                            AuthManager.userName = fullName
                         }
 
                         Toast.makeText(this@LoginActivity, body?.message ?: "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
@@ -108,6 +111,9 @@ class LoginActivity : AppCompatActivity() {
     private fun redirectToRoleBasedActivity(role: String?) {
         if ("ADMIN".equals(role, ignoreCase = true)) {
             val intent = Intent(this, com.example.appdatmon.ui.admin.AdminActivity::class.java)
+            startActivity(intent)
+        } else if ("STAFF".equals(role, ignoreCase = true)) {
+            val intent = Intent(this, com.example.appdatmon.ui.staff.StaffActivity::class.java)
             startActivity(intent)
         } else {
             val intent = Intent(this, MainActivity::class.java)
