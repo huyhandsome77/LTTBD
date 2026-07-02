@@ -134,6 +134,7 @@ public class UserListFragment extends Fragment implements UserAdapter.OnUserActi
         bundle.putString("user_username", user.getUsername());
         bundle.putString("user_role", user.getRole());
         bundle.putString("user_status", user.getStatus());
+        bundle.putInt("user_points", user.getPoints() != null ? user.getPoints() : 0);
 
         UserFormFragment formFragment = new UserFormFragment();
         formFragment.setArguments(bundle);

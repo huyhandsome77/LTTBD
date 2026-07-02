@@ -44,7 +44,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".ui.admin.ChiTietDanhMucActivity"
+            android:name=".ui.admin.ChiTietDanhMucFragment"
             android:exported="false" />
 
         <activity
@@ -82,7 +82,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".review.ReviewActivity"
+            android:name=".ReviewActivity"
             android:exported="false" />
 
         <!-- Menu -->

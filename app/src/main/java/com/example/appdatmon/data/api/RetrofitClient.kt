@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "http://18.212.91.20:3000/"
+    const val BASE_URL = "http://54.81.9.236:3000/"
 
     private val client = OkHttpClient.Builder().addInterceptor { chain ->
         val original = chain.request()
@@ -108,5 +108,16 @@ object RetrofitClient {
             .build()
 
         retrofit.create(ReservationApi::class.java)
+    }
+
+    @JvmStatic
+    val reviewApi: ReviewApi by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(ReviewApi::class.java)
     }
 }

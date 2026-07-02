@@ -66,13 +66,15 @@ class LoginActivity : AppCompatActivity() {
                         val user = body?.user
                         val role = user?.role
                         val fullName = user?.fullName
+                        val userId = user?.id ?: -1L
                         
                         if (cbRememberMe.isChecked) {
-                            AuthManager.saveAuth(this@LoginActivity, token, role, fullName)
+                            AuthManager.saveAuth(this@LoginActivity, token, role, fullName, userId)
                         } else {
                             AuthManager.token = token
                             AuthManager.role = role
                             AuthManager.userName = fullName
+                            AuthManager.userId = userId
                         }
 
                         Toast.makeText(this@LoginActivity, body?.message ?: "Đăng nhập thành công", Toast.LENGTH_SHORT).show()

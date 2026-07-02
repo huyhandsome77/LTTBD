@@ -86,6 +86,7 @@
             <!-- NAME -->
 
             <EditText
+                android:id="@+id/etGuestName"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:layout_marginHorizontal="20dp"
@@ -99,6 +100,7 @@
             <!-- PHONE -->
 
             <EditText
+                android:id="@+id/etGuestPhone"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:layout_marginHorizontal="20dp"
@@ -113,6 +115,7 @@
             <!-- PEOPLE -->
 
             <EditText
+                android:id="@+id/etGuestCount"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:layout_marginHorizontal="20dp"
@@ -124,72 +127,63 @@
                 android:paddingHorizontal="18dp"
                 android:inputType="number"/>
 
-            <!-- TIME TITLE -->
+            <!-- DATE -->
+            <EditText
+                android:id="@+id/etDate"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_input"
+                android:hint="Chọn ngày đặt bàn"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#9E9E9E"
+                android:paddingHorizontal="18dp"
+                android:focusable="false"
+                android:clickable="true"
+                android:drawableEnd="@drawable/ic_calendar"/>
 
+            <!-- TIME - READONLY DISPLAY -->
+            <EditText
+                android:id="@+id/etTime"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_input"
+                android:hint="Giờ đã chọn"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#9E9E9E"
+                android:paddingHorizontal="18dp"
+                android:focusable="false"
+                android:clickable="false"
+                android:drawableEnd="@drawable/ic_time"/>
+
+            <!-- TIME CHIPS SELECTION -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="24dp"
-                android:text="Chọn khung giờ"
+                android:layout_marginTop="16dp"
+                android:text="Chọn giờ đặt bàn"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"/>
-
-            <!-- TIME CHIP -->
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:scrollbars="none">
+                android:layout_marginTop="12dp"
+                android:scrollbars="none"
+                android:visibility="visible">
 
                 <LinearLayout
+                    android:id="@+id/timeLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingHorizontal="20dp">
-
-                    <!-- ACTIVE -->
-
-                    <TextView
-                        android:layout_width="90dp"
-                        android:layout_height="42dp"
-                        android:background="@drawable/bg_category_active"
-                        android:gravity="center"
-                        android:text="17:00"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold"/>
-
-                    <!-- NORMAL -->
-
-                    <TextView
-                        android:layout_width="90dp"
-                        android:layout_height="42dp"
-                        android:layout_marginStart="12dp"
-                        android:background="@drawable/bg_category"
-                        android:gravity="center"
-                        android:text="18:00"
-                        android:textColor="#FFFFFF"/>
-
-                    <TextView
-                        android:layout_width="90dp"
-                        android:layout_height="42dp"
-                        android:layout_marginStart="12dp"
-                        android:background="@drawable/bg_category"
-                        android:gravity="center"
-                        android:text="19:00"
-                        android:textColor="#FFFFFF"/>
-
-                    <TextView
-                        android:layout_width="90dp"
-                        android:layout_height="42dp"
-                        android:layout_marginStart="12dp"
-                        android:background="@drawable/bg_category"
-                        android:gravity="center"
-                        android:text="20:00"
-                        android:textColor="#FFFFFF"/>
-
+                    <!-- Chips will be added here dynamically -->
                 </LinearLayout>
 
             </HorizontalScrollView>
@@ -236,6 +230,7 @@
             <!-- BUTTON -->
 
             <Button
+                android:id="@+id/btnSubmitBooking"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:layout_marginHorizontal="20dp"

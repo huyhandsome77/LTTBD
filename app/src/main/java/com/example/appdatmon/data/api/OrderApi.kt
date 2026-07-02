@@ -8,6 +8,9 @@ interface OrderApi {
     @POST("api/orders")
     fun createOrder(@Body orderData: OrderRequest): Call<OrderResponse>
 
+    @GET("api/orders/my-orders")
+    fun getMyOrders(): Call<List<Order>>
+
     @GET("api/orders")
     fun getAllOrders(@Query("status") status: String? = null): Call<List<Order>>
 

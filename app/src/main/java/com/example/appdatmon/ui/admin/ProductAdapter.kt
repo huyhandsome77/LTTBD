@@ -48,7 +48,11 @@ class ProductAdapter(
         }
 
         if (!product.image.isNullOrEmpty()) {
-            val fullUrl = "http://10.0.2.2:3000${product.image}"
+            val fullUrl = if (product.image.startsWith("http")) {
+                product.image
+            } else {
+                "${com.example.appdatmon.data.api.RetrofitClient.BASE_URL}${product.image.removePrefix("/")}"
+            }
             Glide.with(holder.itemView.context)
                 .load(fullUrl)
                 .placeholder(android.R.drawable.ic_menu_gallery)
