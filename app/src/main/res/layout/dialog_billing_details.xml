@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvDialogTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chi Tiết Hóa Đơn - Bàn 5"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="12dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvBillItems"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="#EEEEEE"
+            android:layout_marginBottom="12dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+            <EditText
+                android:id="@+id/edtVoucher"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Nhập mã Voucher"
+                android:textSize="14sp"/>
+            <CheckBox
+                android:id="@+id/cbUsePoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dùng điểm thưởng"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <TextView android:id="@+id/tvSubTotal" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Thành tiền: 250.000đ" android:textSize="14sp"/>
+        <TextView android:id="@+id/tvDiscount" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Giảm giá: -20.000đ" android:textSize="14sp" android:textColor="#D32F2F"/>
+        <TextView android:id="@+id/tvTotalAmount" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Tổng thanh toán: 230.000đ" android:textSize="16sp" android:textStyle="bold" android:textColor="@android:color/black" android:layout_marginVertical="6dp"/>
+
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#CCCCCC" android:layout_marginVertical="8dp"/>
+
+        <RadioGroup
+            android:id="@+id/rgPaymentMethod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+            <RadioButton android:id="@+id/rbCash" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tiền mặt" android:checked="true"/>
+            <RadioButton android:id="@+id/rbQR" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chuyển khoản QR" android:layout_marginStart="24dp"/>
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/layoutCashInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/edtCustomerCash"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Số tiền khách đưa"
+                android:inputType="number"/>
+            <TextView
+                android:id="@+id/tvReturnCash"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tiền thừa trả khách: 0đ"
+                android:textColor="#388E3C"
+                android:textStyle="bold"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:weightSum="2">
+            <Button
+                android:id="@+id/btnPrintBill"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="In Hóa Đơn"
+                android:backgroundTint="#757575"
+                android:layout_marginEnd="4dp"/>
+            <Button
+                android:id="@+id/btnConfirmPayment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Xác Nhận"
+                android:backgroundTint="#4CAF50"
+                android:layout_marginStart="4dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
