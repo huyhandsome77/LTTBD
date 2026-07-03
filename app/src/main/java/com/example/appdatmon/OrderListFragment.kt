@@ -118,6 +118,12 @@ class OrderListFragment : Fragment() {
         updateTabStyles(btnAll)
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Tự động tải lại danh sách khi người dùng quay lại fragment này
+        loadOrders(currentStatus)
+    }
+
     private fun loadOrders(status: String?) {
         swipeRefresh.isRefreshing = true
         RetrofitClient.orderApi.getAllOrders(status).enqueue(object : Callback<List<Order>> {

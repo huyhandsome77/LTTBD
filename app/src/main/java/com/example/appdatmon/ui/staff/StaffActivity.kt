@@ -31,6 +31,7 @@ class StaffActivity : AppCompatActivity() {
         tvTitle = findViewById(R.id.tvTitle)
         tvHomeWelcome = findViewById(R.id.tvHomeWelcome)
         val btnMenu = findViewById<ImageView>(R.id.btnMenu)
+        
         val navView = findViewById<NavigationView>(R.id.navView)
         val homeButton = findViewById<View>(R.id.homeButton)
 
@@ -117,7 +118,7 @@ class StaffActivity : AppCompatActivity() {
     private fun openPoints() {
         tvTitle.text = "Quản lý tích điểm"
         tvHomeWelcome.visibility = View.GONE
-        // loadFragment(AdminPointsFragment()) // Placeholder if needed
+        loadFragment(com.example.appdatmon.ui.admin.AdminPointsFragment())
     }
 
     private fun performLogout() {

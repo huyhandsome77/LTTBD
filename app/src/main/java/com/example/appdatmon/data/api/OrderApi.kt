@@ -26,8 +26,11 @@ interface OrderApi {
     @GET("api/orders/table/{tableId}")
     fun getCurrentOrderByTable(@Path("tableId") tableId: Long): Call<Order>
 
+    @GET("api/orders/{id}/payment-qr")
+    fun getPaymentQR(@Path("id") id: Long): Call<Map<String, String>>
+
     @PUT("api/orders/{id}/pay")
-    fun payOrder(@Path("id") id: Long): Call<Map<String, String>>
+    fun payOrder(@Path("id") id: Long, @Body paymentData: Map<String, String>): Call<Map<String, String>>
 }
 
 data class OrderRequest(

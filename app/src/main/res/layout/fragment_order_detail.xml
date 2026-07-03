@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -135,13 +135,78 @@
             android:textColor="#E50914"
             android:textSize="14sp" />
 
+        <!-- Payment Selection -->
+        <LinearLayout
+            android:id="@+id/layout_payment_selection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chọn phương thức thanh toán:"
+                android:textStyle="bold"
+                android:textColor="#333333"/>
+
+            <RadioGroup
+                android:id="@+id/rg_detail_payment_method"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <RadioButton
+                    android:id="@+id/rb_detail_cash"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Tiền mặt"
+                    android:checked="true"/>
+
+                <RadioButton
+                    android:id="@+id/rb_detail_transfer"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Chuyển khoản"/>
+            </RadioGroup>
+
+            <!-- QR UI -->
+            <LinearLayout
+                android:id="@+id/layout_detail_qr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginTop="12dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quét mã VietQR / PayOS"
+                    android:textColor="#2E7D32"
+                    android:textStyle="bold"/>
+
+                <ImageView
+                    android:id="@+id/iv_detail_qr"
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    android:layout_marginTop="8dp"
+                    android:scaleType="centerInside"/>
+            </LinearLayout>
+        </LinearLayout>
+
         <Button
             android:id="@+id/btn_pay_order_detail"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="32dp"
             android:backgroundTint="#2E7D32"
-            android:text="THANH TOÁN HÓA ĐƠN"
+            android:text="XÁC NHẬN THANH TOÁN"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:visibility="gone" />
@@ -156,4 +221,4 @@
             android:textColor="#666666" />
 
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

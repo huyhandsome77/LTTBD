@@ -1,6 +1,8 @@
 package com.example.appdatmon
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,8 +33,16 @@ class OrderDetailFragment : Fragment() {
     private lateinit var rvItems: RecyclerView
     private lateinit var btnPay: Button
     private lateinit var btnBack: Button
+    private lateinit var layoutPayment: View
+    private lateinit var rgMethod: android.widget.RadioGroup
+    private lateinit var layoutQR: View
+    private lateinit var ivQR: android.widget.ImageView
 
     private var orderId: Long = -1
+
+    private var isCheckingStatus = false
+    private val handler = Handler(Looper.getMainLooper())
+    private var checkStatusRunnable: Runnable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +64,10 @@ class OrderDetailFragment : Fragment() {
         rvItems = view.findViewById(R.id.rv_order_items_detail)
         btnPay = view.findViewById(R.id.btn_pay_order_detail)
         btnBack = view.findViewById(R.id.btn_back_order)
+        layoutPayment = view.findViewById(R.id.layout_payment_selection)
+        rgMethod = view.findViewById(R.id.rg_detail_payment_method)
+        layoutQR = view.findViewById(R.id.layout_detail_qr)
+        ivQR = view.findViewById(R.id.iv_detail_qr)
 
         rvItems.layoutManager = LinearLayoutManager(context)
 
@@ -89,7 +103,6 @@ class OrderDetailFragment : Fragment() {
         val formatter = NumberFormat.getCurrencyInstance(Locale("vi", "VN"))
         tvTotal.text = formatter.format(order.finalPrice)
 
-        // Status
         tvStatus.text = when (order.status) {
             "PENDING" -> "Chờ xác nhận"
             "CONFIRMED" -> "Đã xác nhận"
@@ -100,16 +113,45 @@ class OrderDetailFragment : Fragment() {
             else -> order.status
         }
 
-        // Payment status
         if (order.paymentStatus == "PAID") {
             tvPaymentStatus.text = "Trạng thái: Đã thanh toán"
             tvPaymentStatus.setTextColor(resources.getColor(android.R.color.holo_green_dark, null))
             btnPay.visibility = View.GONE
+            layoutPayment.visibility = View.GONE
+            stopStatusCheck()
         } else {
             tvPaymentStatus.text = "Trạng thái: Chưa thanh toán"
             tvPaymentStatus.setTextColor(resources.getColor(android.R.color.holo_red_dark, null))
             btnPay.visibility = View.VISIBLE
-            btnPay.setOnClickListener { performPayment(order.id) }
+            layoutPayment.visibility = View.VISIBLE
+
+            rgMethod.setOnCheckedChangeListener { _, checkedId ->
+                if (checkedId == R.id.rb_detail_transfer) {
+                    layoutQR.visibility = View.VISIBLE
+                    btnPay.visibility = View.VISIBLE
+                    btnPay.text = "XÁC NHẬN ĐÃ NHẬN TIỀN"
+                    loadQR(order.id)
+                    startAutoStatusCheck(order.id)
+                } else {
+                    layoutQR.visibility = View.GONE
+                    btnPay.visibility = View.VISIBLE
+                    btnPay.text = "THANH TOÁN TIỀN MẶT"
+                    stopStatusCheck()
+                }
+            }
+
+            btnPay.setOnClickListener { 
+                val method = if (rgMethod.checkedRadioButtonId == R.id.rb_detail_transfer) "TRANSFER" else "CASH"
+                
+                androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                    .setTitle("Xác nhận thanh toán")
+                    .setMessage("Bạn xác nhận đã nhận đủ tiền cho đơn hàng này?")
+                    .setPositiveButton("Xác nhận") { _, _ ->
+                        performPayment(order.id, method) 
+                    }
+                    .setNegativeButton("Hủy", null)
+                    .show()
+            }
         }
 
         order.OrderItems?.let {
@@ -117,12 +159,86 @@ class OrderDetailFragment : Fragment() {
         }
     }
 
-    private fun performPayment(orderId: Long) {
-        RetrofitClient.orderApi.payOrder(orderId).enqueue(object : Callback<Map<String, String>> {
+    private fun loadQR(id: Long) {
+        ivQR.setImageResource(android.R.drawable.stat_sys_download)
+        RetrofitClient.payosApi.createPaymentLink(mapOf("orderId" to id)).enqueue(object : Callback<com.example.appdatmon.data.api.PayosResponse> {
+            override fun onResponse(call: Call<com.example.appdatmon.data.api.PayosResponse>, response: Response<com.example.appdatmon.data.api.PayosResponse>) {
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    val checkoutUrl = body?.checkoutUrl
+                    val qrContent = body?.qrCode ?: checkoutUrl
+                    
+                    if (qrContent != null) {
+                        val encodedData = java.net.URLEncoder.encode(qrContent, "UTF-8")
+                        val qrImageUrl = "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=$encodedData"
+                        com.bumptech.glide.Glide.with(this@OrderDetailFragment)
+                            .load(qrImageUrl)
+                            .into(ivQR)
+                            
+                        ivQR.setOnClickListener {
+                            if (checkoutUrl != null) {
+                                val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(checkoutUrl))
+                                startActivity(intent)
+                            }
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<com.example.appdatmon.data.api.PayosResponse>, t: Throwable) {
+                Toast.makeText(context, "Lỗi tạo QR PayOS", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun startAutoStatusCheck(orderId: Long) {
+        stopStatusCheck()
+        isCheckingStatus = true
+        checkStatusRunnable = object : Runnable {
+            override fun run() {
+                if (!isCheckingStatus) return
+                
+                android.util.Log.d("PayOS_Polling", "Đang kiểm tra đơn hàng #$orderId...")
+
+                RetrofitClient.payosApi.checkOrderStatus(orderId).enqueue(object : Callback<com.example.appdatmon.data.api.OrderStatusResponse> {
+                    override fun onResponse(call: Call<com.example.appdatmon.data.api.OrderStatusResponse>, response: Response<com.example.appdatmon.data.api.OrderStatusResponse>) {
+                        val currentStatus = response.body()?.status
+                        android.util.Log.d("PayOS_Polling", "Kết quả: $currentStatus")
+
+                        if (response.isSuccessful && currentStatus == "PAID") {
+                            isCheckingStatus = false
+                            Toast.makeText(context, "Thanh toán thành công!", Toast.LENGTH_LONG).show()
+                            
+                            loadOrderDetail()
+                            
+                            handler.postDelayed({
+                                if (isAdded) parentFragmentManager.popBackStack()
+                            }, 1500)
+
+                        } else if (isCheckingStatus) {
+                            checkStatusRunnable?.let { handler.postDelayed(it, 3000) }
+                        }
+                    }
+                    override fun onFailure(call: Call<com.example.appdatmon.data.api.OrderStatusResponse>, t: Throwable) {
+                        if (isCheckingStatus) checkStatusRunnable?.let { handler.postDelayed(it, 5000) }
+                    }
+                })
+            }
+        }
+        handler.post(checkStatusRunnable!!)
+    }
+
+    private fun stopStatusCheck() {
+        isCheckingStatus = false
+        checkStatusRunnable?.let { handler.removeCallbacks(it) }
+    }
+
+    private fun performPayment(orderId: Long, method: String) {
+        val paymentData = mapOf("paymentMethod" to method)
+        RetrofitClient.orderApi.payOrder(orderId, paymentData).enqueue(object : Callback<Map<String, String>> {
             override fun onResponse(call: Call<Map<String, String>>, response: Response<Map<String, String>>) {
                 if (response.isSuccessful) {
                     Toast.makeText(context, "Thanh toán thành công!", Toast.LENGTH_SHORT).show()
-                    loadOrderDetail() // Reload to update status
+                    loadOrderDetail() 
                 } else {
                     Toast.makeText(context, "Thanh toán thất bại", Toast.LENGTH_SHORT).show()
                 }
@@ -132,5 +248,10 @@ class OrderDetailFragment : Fragment() {
                 Toast.makeText(context, "Lỗi kết nối khi thanh toán", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        stopStatusCheck()
     }
 }

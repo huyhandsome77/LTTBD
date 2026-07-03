@@ -120,4 +120,37 @@ object RetrofitClient {
 
         retrofit.create(ReviewApi::class.java)
     }
+
+    @JvmStatic
+    val pointApi: PointApi by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(PointApi::class.java)
+    }
+
+    @JvmStatic
+    val statApi: StatApi by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(StatApi::class.java)
+    }
+
+    @JvmStatic
+    val payosApi: PayosApi by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(PayosApi::class.java)
+    }
 }

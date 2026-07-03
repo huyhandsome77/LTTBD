@@ -29,6 +29,9 @@ const reservationRoutes = require('./routes/reservationRoutes');
 const tableRoutes = require('./routes/tableRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
+const pointRoutes = require('./routes/pointRoutes');
+const statRoutes = require('./routes/statRoutes');
+const payosRoutes = require('./routes/payosRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
@@ -39,6 +42,9 @@ app.use('/api/reservations', reservationRoutes);
 app.use('/api/tables', tableRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/points', pointRoutes);
+app.use('/api/stats', statRoutes);
+app.use('/api/payos', payosRoutes);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
