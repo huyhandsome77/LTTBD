@@ -16,23 +16,25 @@
         android:orientation="horizontal">
 
         <!-- IMAGE -->
-
         <ImageView
             android:id="@+id/imgCart"
             android:layout_width="120dp"
-            android:layout_height="match_parent"
+            android:layout_height="120dp"
+            android:layout_gravity="center_vertical"
             android:scaleType="centerCrop"
             android:src="@drawable/sushi1"/>
 
         <!-- INFO -->
-
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="120dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp">
 
             <TextView
                 android:id="@+id/tvCartName"
@@ -46,7 +48,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="6dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -92,7 +94,7 @@
                 android:id="@+id/tvCartPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="6dp"
                 android:text="57.000đ"
                 android:textColor="#E50914"
                 android:textSize="18sp"
