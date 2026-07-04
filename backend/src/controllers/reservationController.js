@@ -1,27 +1,59 @@
-const { Reservation, RestaurantTable, sequelize } = require('../models');
+const { Reservation, RestaurantTable, User, sequelize } = require('../models');
 const { Op } = require('sequelize');
 
-/**
- * Tạo đặt bàn mới
- */
 exports.createReservation = async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
-        const { table_id, guestName, guestPhone, reservationTime, numberOfGuests, note, user_id } = req.body;
+        const { guestName, guestPhone, reservationTime, numberOfGuests, note, user_id } = req.body;
 
-        // Kiểm tra xem bàn có tồn tại không
-        const table = await RestaurantTable.findByPk(table_id);
-        if (!table) {
-            return res.status(404).json({ message: "Không tìm thấy bàn" });
+        const startTime = new Date(reservationTime);
+        const durationHours = 2;
+        const endTime = new Date(startTime.getTime() + durationHours * 60 * 60 * 1000);
+
+        const overlappingReservations = await Reservation.findAll({
+            where: {
+                status: { [Op.in]: ['CONFIRMED', 'CHECKED_IN'] },
+                [Op.and]: [
+                    {
+                        reservationTime: {
+                            [Op.lt]: endTime
+                        }
+                    },
+                    sequelize.where(
+                        sequelize.fn('DATE_ADD', sequelize.col('reservationTime'), sequelize.literal(`INTERVAL ${durationHours} HOUR`)),
+                        { [Op.gt]: startTime }
+                    )
+                ]
+            },
+            attributes: ['table_id'],
+            transaction: t
+        });
+
+        const occupiedTableIds = overlappingReservations.map(r => r.table_id);
+
+        const availableTable = await RestaurantTable.findOne({
+            where: {
+                capacity: { [Op.gte]: numberOfGuests },
+                id: { [Op.notIn]: occupiedTableIds.length > 0 ? occupiedTableIds : [-1] },
+                status: { [Op.ne]: 'CLEANING' }
+            },
+            order: [['capacity', 'ASC']],
+            transaction: t
+        });
+
+        if (!availableTable) {
+            await t.rollback();
+            return res.status(400).json({
+                message: "Rất tiếc, hiện tại không còn bàn trống phù hợp với số lượng khách và khung giờ bạn yêu cầu. Vui lòng chọn khung giờ khác!"
+            });
         }
 
-        // Tạo bản ghi đặt bàn
         const reservation = await Reservation.create({
-            table_id,
-            user_id,
+            table_id: availableTable.id,
+            user_id: user_id || null,
             guestName,
             guestPhone,
-            reservationTime,
+            reservationTime: startTime,
             numberOfGuests,
             note,
             status: 'CONFIRMED'
@@ -30,17 +62,18 @@ exports.createReservation = async (req, res, next) => {
         await t.commit();
         res.status(201).json({
             message: "Đặt bàn thành công",
-            data: reservation
+            data: {
+                ...reservation.toJSON(),
+                tableNumber: availableTable.tableNumber
+            }
         });
     } catch (error) {
         await t.rollback();
-        next(error);
+        console.error("Create Reservation Error:", error);
+        res.status(500).json({ message: "Lỗi hệ thống khi đặt bàn", error: error.message });
     }
 };
 
-/**
- * Xác nhận khách đã đến (Check-in)
- */
 exports.checkIn = async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
@@ -55,11 +88,9 @@ exports.checkIn = async (req, res, next) => {
             return res.status(400).json({ message: "Trạng thái đặt bàn không hợp lệ để check-in" });
         }
 
-        // Cập nhật trạng thái đặt bàn
         reservation.status = 'CHECKED_IN';
         await reservation.save({ transaction: t });
 
-        // Cập nhật trạng thái bàn sang OCCUPIED
         await RestaurantTable.update(
             { status: 'OCCUPIED' },
             { where: { id: reservation.table_id }, transaction: t }
@@ -73,9 +104,6 @@ exports.checkIn = async (req, res, next) => {
     }
 };
 
-/**
- * Hủy đặt bàn
- */
 exports.cancelReservation = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -94,13 +122,24 @@ exports.cancelReservation = async (req, res, next) => {
     }
 };
 
-/**
- * Lấy danh sách đặt bàn
- */
+exports.getMyReservations = async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const reservations = await Reservation.findAll({
+            where: { user_id: userId },
+            include: [{ model: RestaurantTable, as: 'table' }],
+            order: [['reservationTime', 'DESC']]
+        });
+        res.json(reservations);
+    } catch (error) {
+        next(error);
+    }
+};
+
 exports.getAllReservations = async (req, res, next) => {
     try {
         const reservations = await Reservation.findAll({
-            include: [{ model: RestaurantTable, as: 'table' }],
+            include: [{ model: RestaurantTable, as: 'table' }, { model: User, as: 'User' }],
             order: [['reservationTime', 'ASC']]
         });
         res.json(reservations);

@@ -1,79 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="6dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="12dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tvCustomerName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.2"
-            android:text="Ronaldo"
-            android:textSize="12sp"
-            android:gravity="center"
-            android:textColor="#333333" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tvDishName"
-            android:layout_width="0dp"
+            <TextView
+                android:id="@+id/tvCustomerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Khách hàng"
+                android:textColor="#333333"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCreatedAt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="14:30 - 20/10"
+                android:textColor="#999999"
+                android:textSize="11sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Gà"
-            android:textSize="12sp"
-            android:gravity="center"
-            android:textColor="#333333" />
+            android:layout_marginTop="2dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0987654321"
+                android:textColor="#666666"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="10dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="#DDDDDD" />
+
+            <TextView
+                android:id="@+id/tvDishName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Món ăn"
+                android:textColor="#E50914"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Stars Layout -->
+        <LinearLayout
+            android:id="@+id/layoutStars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <ImageView android:id="@+id/adminStar1" android:layout_width="14dp" android:layout_height="14dp" android:src="@drawable/ic_star_fill" app:tint="#FFD54F" android:layout_marginEnd="2dp"/>
+            <ImageView android:id="@+id/adminStar2" android:layout_width="14dp" android:layout_height="14dp" android:src="@drawable/ic_star_fill" app:tint="#FFD54F" android:layout_marginEnd="2dp"/>
+            <ImageView android:id="@+id/adminStar3" android:layout_width="14dp" android:layout_height="14dp" android:src="@drawable/ic_star_fill" app:tint="#FFD54F" android:layout_marginEnd="2dp"/>
+            <ImageView android:id="@+id/adminStar4" android:layout_width="14dp" android:layout_height="14dp" android:src="@drawable/ic_star_fill" app:tint="#FFD54F" android:layout_marginEnd="2dp"/>
+            <ImageView android:id="@+id/adminStar5" android:layout_width="14dp" android:layout_height="14dp" android:src="@drawable/ic_star_fill" app:tint="#FFD54F" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvComment"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:text="Mặn vchhhh"
-            android:textSize="12sp"
-            android:gravity="center"
-            android:textColor="#333333" />
+            android:layout_marginTop="8dp"
+            android:text="Nội dung đánh giá của khách hàng sẽ hiển thị ở đây..."
+            android:textColor="#444444"
+            android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/tvRating"
-            android:layout_width="0dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.8"
-            android:text="4 sao"
-            android:textSize="12sp"
-            android:gravity="center"
-            android:textColor="#333333" />
+            android:layout_marginTop="12dp">
 
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
             <TextView
                 android:id="@+id/btnDelete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_alignParentEnd="true"
                 android:background="@drawable/bg_home_circle"
-                android:backgroundTint="#E53935"
+                android:backgroundTint="#FEEBEE"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
                 android:text="Xóa"
-                android:textColor="#FFFFFF"
-                android:textSize="10sp"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="4dp" />
-        </FrameLayout>
+                android:textColor="#E53935"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginHorizontal="8dp"
-        android:background="#EEEEEE" />
-</LinearLayout>
+</androidx.cardview.widget.CardView>

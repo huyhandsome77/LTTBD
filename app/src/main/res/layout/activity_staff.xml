@@ -135,7 +135,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/btn_menu_logout_bottom"
+                android:id="@+id/btn_menu_reservations"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -143,8 +143,8 @@
                 android:orientation="vertical"
                 android:clickable="true"
                 android:focusable="true">
-                <ImageView android:layout_width="26dp" android:layout_height="26dp" android:src="@android:drawable/ic_lock_power_off" app:tint="#FFFFFF" />
-                <TextView android:text="Đăng xuất" android:textColor="#D9DDE5" android:textSize="9sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <ImageView android:layout_width="26dp" android:layout_height="26dp" android:src="@android:drawable/ic_menu_today" app:tint="#FFFFFF" />
+                <TextView android:text="QL đặt bàn" android:textColor="#D9DDE5" android:textSize="9sp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
             </LinearLayout>
 
         </LinearLayout>

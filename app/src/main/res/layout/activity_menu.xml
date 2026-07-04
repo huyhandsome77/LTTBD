@@ -12,7 +12,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="100dp">
+        android:paddingBottom="100dp"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,79 +79,23 @@
 
             <!-- CATEGORY -->
 
-            <HorizontalScrollView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCategoriesMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:scrollbars="none">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="16dp">
-
-                    <!-- ACTIVE -->
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="45dp"
-                        android:background="@drawable/bg_category_active"
-                        android:gravity="center"
-                        android:paddingHorizontal="24dp"
-                        android:text="Sushi"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold"/>
-
-                    <!-- NORMAL -->
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="45dp"
-                        android:layout_marginStart="12dp"
-                        android:background="@drawable/bg_category"
-                        android:gravity="center"
-                        android:paddingHorizontal="24dp"
-                        android:text="Sashimi"
-                        android:textColor="#FFFFFF"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="45dp"
-                        android:layout_marginStart="12dp"
-                        android:background="@drawable/bg_category"
-                        android:gravity="center"
-                        android:paddingHorizontal="24dp"
-                        android:text="Udon"
-                        android:textColor="#FFFFFF"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="45dp"
-                        android:layout_marginStart="12dp"
-                        android:background="@drawable/bg_category"
-                        android:gravity="center"
-                        android:paddingHorizontal="24dp"
-                        android:text="Drinks"
-                        android:textColor="#FFFFFF"/>
-
-                </LinearLayout>
-
-            </HorizontalScrollView>
+                android:paddingHorizontal="16dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
             <!-- FOOD LIST -->
-            <include layout="@layout/item_food"/>
-
-            <include layout="@layout/item_food"/>
-
-            <include layout="@layout/item_food"/>
-
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/recyclerFood"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="20dp"-->
-<!--                android:nestedScrollingEnabled="false"/>-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFoodsMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:nestedScrollingEnabled="false"/>
 
         </LinearLayout>
 
@@ -167,7 +112,9 @@
         android:layout_margin="20dp"
         app:cardBackgroundColor="#E50914"
         app:cardCornerRadius="35dp"
-        app:cardElevation="10dp">
+        app:cardElevation="10dp"
+        android:clickable="true"
+        android:focusable="true">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -183,16 +130,18 @@
             <!-- COUNT -->
 
             <TextView
+                android:id="@+id/tvCartBadge"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_gravity="top|end"
                 android:layout_margin="8dp"
                 android:background="@drawable/bg_count"
                 android:gravity="center"
-                android:text="2"
+                android:text="0"
                 android:textColor="#FFFFFF"
                 android:textSize="10sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
         </FrameLayout>
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="NGHIỆP VỤ BẾP">
+        <menu>
+            <item
+                android:id="@+id/nav_kitchen_main"
+                android:icon="@drawable/ic_chef"
+                android:title="Danh sách chế biến" />
+        </menu>
+    </item>
+
+    <item android:title="TÀI KHOẢN">
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_user"
+                android:title="Thông tin cá nhân" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@android:drawable/ic_lock_power_off"
+                android:title="Đăng xuất" />
+        </menu>
+    </item>
+
+</menu>

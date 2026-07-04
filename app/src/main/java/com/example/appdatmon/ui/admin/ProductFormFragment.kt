@@ -97,7 +97,12 @@ class ProductFormFragment : Fragment() {
                             
                             uploadedImageUrl = product.image
                             if (!product.image.isNullOrEmpty()) {
-                                val fullUrl = "http://10.0.2.2:3000${product.image}"
+                                // Sử dụng BASE_URL từ RetrofitClient thay vì hardcode
+                                val fullUrl = if (product.image.startsWith("http")) {
+                                    product.image
+                                } else {
+                                    "${RetrofitClient.BASE_URL}${product.image.removePrefix("/")}"
+                                }
                                 Glide.with(this@ProductFormFragment).load(fullUrl).into(ivPreview)
                             }
                         }

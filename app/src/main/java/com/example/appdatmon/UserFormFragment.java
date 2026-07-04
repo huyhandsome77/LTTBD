@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.appdatmon.data.api.RetrofitClient;
+import com.example.appdatmon.data.model.RegisterResponse;
 import com.example.appdatmon.data.model.User;
 
 import java.util.Arrays;
@@ -32,6 +33,7 @@ public class UserFormFragment extends Fragment {
     private Button btnSave, btnCancel;
     private TextView tvBackTitle, tvTitle;
     private Long userId = null;
+    private Integer userPoints = 0;
 
     private final String[] roles = {"ADMIN", "STAFF", "KITCHEN", "CUSTOMER"};
     private final String[] statuses = {"ACTIVE", "BLOCKED"};
@@ -87,6 +89,8 @@ public class UserFormFragment extends Fragment {
                 String status = bundle.getString("user_status", "");
                 int statusPos = Arrays.asList(statuses).indexOf(status.toUpperCase());
                 if (statusPos >= 0) spinnerStatus.setSelection(statusPos);
+
+                userPoints = bundle.getInt("user_points", 0);
                 
                 // Khi sửa user: Ẩn mật khẩu, hiện username (có thể sửa)
                 edtPassword.setVisibility(View.GONE);
@@ -131,10 +135,10 @@ public class UserFormFragment extends Fragment {
                 Toast.makeText(requireContext(), "Vui lòng nhập mật khẩu", Toast.LENGTH_SHORT).show();
                 return;
             }
-            User newUser = new User(null, fullName, username, email, phone, role, status, password);
-            RetrofitClient.getUserApi().createUser(newUser).enqueue(new Callback<User>() {
+            User newUser = new User(null, fullName, username, email, phone, 0, role, status, password);
+            RetrofitClient.getUserApi().createUser(newUser).enqueue(new Callback<RegisterResponse>() {
                 @Override
-                public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                public void onResponse(@NonNull Call<RegisterResponse> call, @NonNull Response<RegisterResponse> response) {
                     if (!isAdded()) return;
                     if (response.isSuccessful()) {
                         Toast.makeText(requireContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
@@ -145,20 +149,21 @@ public class UserFormFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<RegisterResponse> call, @NonNull Throwable t) {
                     if (!isAdded()) return;
                     Toast.makeText(requireContext(), "Lỗi kết nối", Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
             // CẬP NHẬT
-            User userUpdate = new User(userId, fullName, username, email, phone, role, status, null);
-            RetrofitClient.getUserApi().updateUser(userId, userUpdate).enqueue(new Callback<User>() {
+            User userUpdate = new User(userId, fullName, username, email, phone, userPoints, role, status, null);
+            RetrofitClient.getUserApi().updateUser(userId, userUpdate).enqueue(new Callback<RegisterResponse>() {
                 @Override
-                public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                public void onResponse(@NonNull Call<RegisterResponse> call, @NonNull Response<RegisterResponse> response) {
                     if (!isAdded()) return;
                     if (response.isSuccessful()) {
-                        Toast.makeText(requireContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show()
+;
                         getParentFragmentManager().popBackStack();
                     } else {
                         Toast.makeText(requireContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
@@ -166,7 +171,7 @@ public class UserFormFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<RegisterResponse> call, @NonNull Throwable t) {
                     if (!isAdded()) return;
                     Toast.makeText(requireContext(), "Lỗi kết nối", Toast.LENGTH_SHORT).show();
                 }

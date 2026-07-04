@@ -8,7 +8,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.appdatmon.MainActivity
+import com.example.appdatmon.ui.User.MainActivity
 import com.example.appdatmon.R
 import com.example.appdatmon.data.api.AuthManager
 import com.example.appdatmon.data.api.RetrofitClient
@@ -66,13 +66,15 @@ class LoginActivity : AppCompatActivity() {
                         val user = body?.user
                         val role = user?.role
                         val fullName = user?.fullName
+                        val userId = user?.id ?: -1L
                         
                         if (cbRememberMe.isChecked) {
-                            AuthManager.saveAuth(this@LoginActivity, token, role, fullName)
+                            AuthManager.saveAuth(this@LoginActivity, token, role, fullName, userId)
                         } else {
                             AuthManager.token = token
                             AuthManager.role = role
                             AuthManager.userName = fullName
+                            AuthManager.userId = userId
                         }
 
                         Toast.makeText(this@LoginActivity, body?.message ?: "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
@@ -114,6 +116,9 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         } else if ("STAFF".equals(role, ignoreCase = true)) {
             val intent = Intent(this, com.example.appdatmon.ui.staff.StaffActivity::class.java)
+            startActivity(intent)
+        } else if ("KITCHEN".equals(role, ignoreCase = true)) {
+            val intent = Intent(this, com.example.appdatmon.ui.admin.KitchenActivity::class.java)
             startActivity(intent)
         } else {
             val intent = Intent(this, MainActivity::class.java)

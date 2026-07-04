@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL =  "http://52.4.157.183:3000/"
+    const val BASE_URL = "http://54.81.9.236:3000/"
 
     private val client = OkHttpClient.Builder().addInterceptor { chain ->
         val original = chain.request()
@@ -108,5 +108,49 @@ object RetrofitClient {
             .build()
 
         retrofit.create(ReservationApi::class.java)
+    }
+
+    @JvmStatic
+    val reviewApi: ReviewApi by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(ReviewApi::class.java)
+    }
+
+    @JvmStatic
+    val pointApi: PointApi by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(PointApi::class.java)
+    }
+
+    @JvmStatic
+    val statApi: StatApi by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(StatApi::class.java)
+    }
+
+    @JvmStatic
+    val payosApi: PayosApi by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(PayosApi::class.java)
     }
 }

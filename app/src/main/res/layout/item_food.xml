@@ -19,6 +19,7 @@
         <!-- IMAGE -->
 
         <ImageView
+            android:id="@+id/imgFood"
             android:layout_width="140dp"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -35,6 +36,7 @@
             android:padding="16dp">
 
             <TextView
+                android:id="@+id/tvFoodName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Salmon Sushi"
@@ -43,6 +45,7 @@
                 android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/tvFoodDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -51,6 +54,7 @@
                 android:textSize="13sp"/>
 
             <TextView
+                android:id="@+id/tvFoodPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -69,11 +73,14 @@
             android:padding="16dp">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/btnAddFood"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_gravity="bottom|center"
                 app:cardBackgroundColor="#E50914"
-                app:cardCornerRadius="22dp">
+                app:cardCornerRadius="22dp"
+                android:clickable="true"
+                android:focusable="true">
 
                 <TextView
                     android:layout_width="match_parent"

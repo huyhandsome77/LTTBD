@@ -10,8 +10,7 @@ const Reservation = require('./Reservation')(sequelize);
 const Order = require('./Order')(sequelize);
 const OrderItem = require('./OrderItem')(sequelize);
 const Payment = require('./Payment')(sequelize);
-
-// --- RELATIONSHIPS ---
+const Review = require('./Review')(sequelize);
 
 // Category - Product
 Category.hasMany(Product, {
@@ -36,36 +35,40 @@ Product.hasMany(CartItem, { foreignKey: "product_id" });
 CartItem.belongsTo(Product, { foreignKey: "product_id" });
 
 // User - Reservation
-User.hasMany(Reservation, { foreignKey: "user_id" });
-Reservation.belongsTo(User, { foreignKey: "user_id" });
+User.hasMany(Reservation, { foreignKey: "user_id", as: 'reservations' });
+Reservation.belongsTo(User, { foreignKey: "user_id", as: 'User' });
 
 // RestaurantTable - Reservation
 RestaurantTable.hasMany(Reservation, { foreignKey: "table_id", as: 'reservations' });
 Reservation.belongsTo(RestaurantTable, { foreignKey: "table_id", as: 'table' });
 
 // User - Order
-User.hasMany(Order, { foreignKey: "user_id" });
-Order.belongsTo(User, { foreignKey: "user_id" });
+User.hasMany(Order, { foreignKey: "user_id", as: 'orders' });
+Order.belongsTo(User, { foreignKey: "user_id", as: 'User' });
 
 // RestaurantTable - Order
-RestaurantTable.hasMany(Order, { foreignKey: "table_id" });
-Order.belongsTo(RestaurantTable, { foreignKey: "table_id" });
+RestaurantTable.hasMany(Order, { foreignKey: "table_id", as: 'orders' });
+Order.belongsTo(RestaurantTable, { foreignKey: "table_id", as: 'RestaurantTable' });
 
 // Reservation - Order
 Reservation.hasMany(Order, { foreignKey: "reservation_id" });
 Order.belongsTo(Reservation, { foreignKey: "reservation_id" });
 
 // Order - OrderItem
-Order.hasMany(OrderItem, { foreignKey: "order_id" });
+Order.hasMany(OrderItem, { foreignKey: "order_id", as: 'OrderItems' });
 OrderItem.belongsTo(Order, { foreignKey: "order_id" });
 
 // Product - OrderItem
 Product.hasMany(OrderItem, { foreignKey: "product_id" });
-OrderItem.belongsTo(Product, { foreignKey: "product_id" });
+OrderItem.belongsTo(Product, { foreignKey: "product_id", as: 'Product' });
 
 // Order - Payment
 Order.hasOne(Payment, { foreignKey: "order_id" });
 Payment.belongsTo(Order, { foreignKey: "order_id" });
+
+// User - Review
+User.hasMany(Review, { foreignKey: "user_id", as: 'reviews' });
+Review.belongsTo(User, { foreignKey: "user_id", as: 'user' });
 
 module.exports = {
     sequelize,
@@ -79,5 +82,6 @@ module.exports = {
     Reservation,
     Order,
     OrderItem,
-    Payment
+    Payment,
+    Review
 };

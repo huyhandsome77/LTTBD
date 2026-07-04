@@ -86,19 +86,10 @@
 
                     </LinearLayout>
 
-                    <!-- MEMBER -->
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="GOLD MEMBER"
-                        android:textColor="#FFD54F"
-                        android:textSize="14sp"
-                        android:textStyle="bold"/>
-
                     <!-- AVATAR -->
 
                     <ImageView
+                        android:id="@+id/imgAvatarProfile"
                         android:layout_width="75dp"
                         android:layout_height="75dp"
                         android:layout_centerHorizontal="true"
@@ -109,11 +100,12 @@
                     <!-- NAME -->
 
                     <TextView
+                        android:id="@+id/tvUserNameProfile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="105dp"
-                        android:text="Nguyễn Phước Thịnh"
+                        android:text="Người dùng"
                         android:textColor="#FFFFFF"
                         android:textSize="24sp"
                         android:textStyle="bold"/>
@@ -121,11 +113,12 @@
                     <!-- Gmail -->
 
                     <TextView
+                        android:id="@+id/tvUserEmailProfile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="142dp"
-                        android:text="phuocthinh@gmail.com"
+                        android:text="email@example.com"
                         android:textColor="#D0D0D0"
                         android:textSize="14sp"/>
 
@@ -133,11 +126,11 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- REWARD -->
+            <!-- POINTS CARD -->
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="90dp"
                 android:layout_marginHorizontal="18dp"
                 android:layout_marginBottom="16dp"
                 app:cardBackgroundColor="#111111"
@@ -148,64 +141,13 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="22dp">
-
-                    <ImageView
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        android:src="@drawable/ic_gift"
-                        app:tint="#E50914"/>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingStart="18dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="1.250 Điểm"
-                            android:textColor="#FFFFFF"
-                            android:textSize="24sp"
-                            android:textStyle="bold"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:text="Còn 300 điểm để lên Platinum"
-                            android:textColor="#BDBDBD"
-                            android:textSize="13sp"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <!-- VOUCHER -->
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="95dp"
-                android:layout_marginHorizontal="18dp"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="#111111"
-                app:cardCornerRadius="22dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="22dp">
+                    android:paddingHorizontal="22dp">
 
                     <ImageView
                         android:layout_width="38dp"
                         android:layout_height="38dp"
-                        android:src="@drawable/ic_voucher"
-                        app:tint="#E50914"/>
+                        android:src="@drawable/ic_star"
+                        app:tint="#FFD700"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -217,7 +159,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Voucher của tôi"
+                            android:text="Điểm thưởng"
                             android:textColor="#FFFFFF"
                             android:textSize="18sp"
                             android:textStyle="bold"/>
@@ -225,18 +167,20 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="3 ưu đãi đang khả dụng"
+                            android:text="Tích điểm để nhận ưu đãi"
                             android:textColor="#BDBDBD"
                             android:textSize="13sp"/>
 
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/tvUserPoints"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=">"
-                        android:textColor="#FFFFFF"
-                        android:textSize="20sp"/>
+                        android:text="0"
+                        android:textColor="#FFD700"
+                        android:textSize="22sp"
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 
@@ -245,6 +189,7 @@
             <!-- ORDER HISTORY -->
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/btnOrderHistory"
                 android:layout_width="match_parent"
                 android:layout_height="95dp"
                 android:layout_marginHorizontal="18dp"
@@ -281,9 +226,10 @@
                             android:textStyle="bold"/>
 
                         <TextView
+                            android:id="@+id/tvOrderCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="12 đơn hàng gần đây"
+                            android:text="Xem lại các đơn hàng"
                             android:textColor="#BDBDBD"
                             android:textSize="13sp"/>
 
@@ -303,6 +249,7 @@
             <!-- BOOKING -->
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/btnBookingHistory"
                 android:layout_width="match_parent"
                 android:layout_height="95dp"
                 android:layout_marginHorizontal="18dp"
@@ -339,9 +286,10 @@
                             android:textStyle="bold"/>
 
                         <TextView
+                            android:id="@+id/tvBookingCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="5 lần đặt bàn"
+                            android:text="Xem lại các lượt đặt bàn"
                             android:textColor="#BDBDBD"
                             android:textSize="13sp"/>
 

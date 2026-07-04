@@ -58,7 +58,7 @@ class StaffActivity : AppCompatActivity() {
         val btnTable = findViewById<View>(R.id.btn_menu_table)
         val btnOrder = findViewById<View>(R.id.btn_menu_order)
         val btnPoints = findViewById<View>(R.id.btn_menu_points)
-        val btnLogoutBottom = findViewById<View>(R.id.btn_menu_logout_bottom)
+        val btnReservationsBottom = findViewById<View>(R.id.btn_menu_reservations)
 
         btnMenu.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
@@ -84,7 +84,7 @@ class StaffActivity : AppCompatActivity() {
         btnTable?.setOnClickListener { openTable() }
         btnOrder?.setOnClickListener { openOrder() }
         btnPoints?.setOnClickListener { openPoints() }
-        btnLogoutBottom?.setOnClickListener { performLogout() }
+        btnReservationsBottom?.setOnClickListener { openReservations() }
 
         homeButton.setOnClickListener {
             tvTitle.text = "Trang chủ"
@@ -117,7 +117,7 @@ class StaffActivity : AppCompatActivity() {
     private fun openPoints() {
         tvTitle.text = "Quản lý tích điểm"
         tvHomeWelcome.visibility = View.GONE
-        // loadFragment(AdminPointsFragment()) // Placeholder if needed
+        loadFragment(com.example.appdatmon.ui.admin.AdminPointsFragment())
     }
 
     private fun performLogout() {

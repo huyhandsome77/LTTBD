@@ -74,31 +74,14 @@
 
     <!-- CONTENT -->
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCartItems"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/topHeader"
         android:layout_above="@+id/bottomPayment"
         android:clipToPadding="false"
-        android:paddingBottom="16dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
-            <!-- FOOD ITEM -->
-
-            <include layout="@layout/item_cart"/>
-
-            <include layout="@layout/item_cart"/>
-
-            <include layout="@layout/item_cart"/>
-
-        </LinearLayout>
-
-    </ScrollView>
+        android:paddingBottom="16dp" />
 
     <!-- BOTTOM PAYMENT -->
 
@@ -150,15 +133,17 @@
                         android:textSize="15sp"/>
 
                     <TextView
+                        android:id="@+id/tvUserPointsCart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Bạn có 120 điểm"
+                        android:text="Bạn có 0 điểm"
                         android:textColor="#BDBDBD"
                         android:textSize="12sp"/>
 
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/btnApplyPoints"
                     android:layout_width="85dp"
                     android:layout_height="38dp"
                     android:background="@drawable/bg_category_active"
@@ -166,7 +151,9 @@
                     android:text="ÁP DỤNG"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true"/>
 
             </LinearLayout>
 
@@ -196,11 +183,12 @@
             <!-- BADGE -->
 
             <TextView
+                android:id="@+id/tvTotalItemsCart"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:background="@drawable/bg_badge"
                 android:gravity="center"
-                android:text="3"
+                android:text="0"
                 android:textSize="12sp"
                 android:textStyle="bold"/>
 
@@ -225,9 +213,10 @@
                 android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/tvTotalPriceCart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="353.000đ"
+                android:text="0đ"
                 android:textColor="#E50914"
                 android:textSize="22sp"
                 android:textStyle="bold"/>

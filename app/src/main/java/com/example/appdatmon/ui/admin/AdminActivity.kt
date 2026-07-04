@@ -75,6 +75,9 @@ class AdminActivity : AppCompatActivity() {
                 R.id.nav_points -> {
                     tvTitle.text = "Quản lý tích điểm"
                     tvHomeWelcome.visibility = View.GONE
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.content_container, AdminPointsFragment())
+                        .commit()
                 }
                 R.id.nav_reservations -> {
                     tvTitle.text = "Lịch sử đặt bàn"
@@ -84,8 +87,11 @@ class AdminActivity : AppCompatActivity() {
                         .commit()
                 }
                 R.id.nav_stats -> {
-                    tvTitle.text = "Xem thống kê"
+                    tvTitle.text = "Thống kê doanh thu"
                     tvHomeWelcome.visibility = View.GONE
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.content_container, AdminStatsFragment())
+                        .commit()
                 }
                 R.id.nav_settings -> {
                     tvTitle.text = "Cài đặt"
