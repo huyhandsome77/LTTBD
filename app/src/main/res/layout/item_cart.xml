@@ -18,6 +18,7 @@
         <!-- IMAGE -->
 
         <ImageView
+            android:id="@+id/imgCart"
             android:layout_width="120dp"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -34,6 +35,7 @@
             android:padding="16dp">
 
             <TextView
+                android:id="@+id/tvCartName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="R38. Spicy Ebi Roll"
@@ -41,18 +43,56 @@
                 android:textSize="18sp"
                 android:textStyle="bold"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="Cơm cuộn tôm sốt cay"
-                android:textColor="#BDBDBD"
-                android:textSize="13sp"/>
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/btnMinusCart"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/bg_delete"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+                <TextView
+                    android:id="@+id/tvCartQty"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/btnPlusCart"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/bg_category_active"
+                    android:gravity="center"
+                    android:text="+"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvCartPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="57.000đ"
                 android:textColor="#E50914"
                 android:textSize="18sp"
@@ -68,6 +108,7 @@
             android:padding="12dp">
 
             <TextView
+                android:id="@+id/btnDeleteCart"
                 android:layout_width="25dp"
                 android:layout_height="30dp"
                 android:layout_gravity="top|end"
@@ -76,7 +117,9 @@
                 android:text="✕"
                 android:textColor="#FFFFFF"
                 android:textSize="10sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"/>
         </FrameLayout>
 
     </LinearLayout>

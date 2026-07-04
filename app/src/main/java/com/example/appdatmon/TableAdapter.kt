@@ -69,7 +69,6 @@ class TableAdapter(
                     v.animate().scaleX(1.0f).scaleY(1.0f).setDuration(100).start()
                 }
             }
-            v.performClick()
             false
         }
 

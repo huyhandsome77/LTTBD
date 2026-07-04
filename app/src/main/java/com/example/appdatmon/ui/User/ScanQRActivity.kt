@@ -1,4 +1,4 @@
-package com.example.appdatmon
+package com.example.appdatmon.ui.User
 
 import android.Manifest
 import android.content.Intent
@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.appdatmon.R
 import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult

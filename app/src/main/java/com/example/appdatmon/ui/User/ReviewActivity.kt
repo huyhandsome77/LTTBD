@@ -1,4 +1,4 @@
-package com.example.appdatmon
+package com.example.appdatmon.ui.User
 
 import android.os.Bundle
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.appdatmon.R
 import com.example.appdatmon.data.api.AuthManager
 import com.example.appdatmon.data.api.RetrofitClient
 import com.example.appdatmon.data.model.Review

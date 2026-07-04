@@ -31,7 +31,6 @@ class StaffActivity : AppCompatActivity() {
         tvTitle = findViewById(R.id.tvTitle)
         tvHomeWelcome = findViewById(R.id.tvHomeWelcome)
         val btnMenu = findViewById<ImageView>(R.id.btnMenu)
-        
         val navView = findViewById<NavigationView>(R.id.navView)
         val homeButton = findViewById<View>(R.id.homeButton)
 
@@ -59,7 +58,7 @@ class StaffActivity : AppCompatActivity() {
         val btnTable = findViewById<View>(R.id.btn_menu_table)
         val btnOrder = findViewById<View>(R.id.btn_menu_order)
         val btnPoints = findViewById<View>(R.id.btn_menu_points)
-        val btnLogoutBottom = findViewById<View>(R.id.btn_menu_logout_bottom)
+        val btnReservationsBottom = findViewById<View>(R.id.btn_menu_reservations)
 
         btnMenu.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
@@ -85,7 +84,7 @@ class StaffActivity : AppCompatActivity() {
         btnTable?.setOnClickListener { openTable() }
         btnOrder?.setOnClickListener { openOrder() }
         btnPoints?.setOnClickListener { openPoints() }
-        btnLogoutBottom?.setOnClickListener { performLogout() }
+        btnReservationsBottom?.setOnClickListener { openReservations() }
 
         homeButton.setOnClickListener {
             tvTitle.text = "Trang chủ"

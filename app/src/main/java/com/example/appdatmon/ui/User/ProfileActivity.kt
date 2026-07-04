@@ -1,4 +1,4 @@
-package com.example.appdatmon
+package com.example.appdatmon.ui.User
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,12 +10,10 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import com.example.appdatmon.R
 import com.example.appdatmon.data.api.AuthManager
 import com.example.appdatmon.data.api.RetrofitClient
-import com.example.appdatmon.data.model.Order
-import com.example.appdatmon.data.model.RegisterResponse
-import com.example.appdatmon.data.model.Reservation
-import com.example.appdatmon.data.model.User
+import com.example.appdatmon.data.model.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import retrofit2.Call
 import retrofit2.Callback
@@ -59,11 +57,11 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         findViewById<androidx.cardview.widget.CardView>(R.id.btnOrderHistory).setOnClickListener {
-            // Toast.makeText(this, "Chức năng xem lịch sử đơn hàng đang phát triển", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, OrderHistoryActivity::class.java))
         }
 
         findViewById<androidx.cardview.widget.CardView>(R.id.btnBookingHistory).setOnClickListener {
-            // Toast.makeText(this, "Chức năng xem lịch sử đặt bàn đang phát triển", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, BookingHistoryActivity::class.java))
         }
 
         btnLogout.setOnClickListener {

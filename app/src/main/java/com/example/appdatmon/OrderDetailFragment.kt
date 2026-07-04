@@ -33,6 +33,11 @@ class OrderDetailFragment : Fragment() {
     private lateinit var rvItems: RecyclerView
     private lateinit var btnPay: Button
     private lateinit var btnBack: Button
+    
+    private lateinit var layoutAdminActions: View
+    private lateinit var btnConfirmOrder: Button
+    private lateinit var btnCancelOrder: Button
+
     private lateinit var layoutPayment: View
     private lateinit var rgMethod: android.widget.RadioGroup
     private lateinit var layoutQR: View
@@ -64,6 +69,11 @@ class OrderDetailFragment : Fragment() {
         rvItems = view.findViewById(R.id.rv_order_items_detail)
         btnPay = view.findViewById(R.id.btn_pay_order_detail)
         btnBack = view.findViewById(R.id.btn_back_order)
+        
+        layoutAdminActions = view.findViewById(R.id.layout_admin_actions)
+        btnConfirmOrder = view.findViewById(R.id.btn_confirm_order)
+        btnCancelOrder = view.findViewById(R.id.btn_cancel_order)
+
         layoutPayment = view.findViewById(R.id.layout_payment_selection)
         rgMethod = view.findViewById(R.id.rg_detail_payment_method)
         layoutQR = view.findViewById(R.id.layout_detail_qr)
@@ -113,28 +123,31 @@ class OrderDetailFragment : Fragment() {
             else -> order.status
         }
 
-        if (order.paymentStatus == "PAID") {
-            tvPaymentStatus.text = "Trạng thái: Đã thanh toán"
-            tvPaymentStatus.setTextColor(resources.getColor(android.R.color.holo_green_dark, null))
-            btnPay.visibility = View.GONE
-            layoutPayment.visibility = View.GONE
-            stopStatusCheck()
+        // Logic hiển thị nút bấm theo quy trình mới
+        if (order.status == "PENDING") {
+            layoutAdminActions.visibility = View.VISIBLE
+            btnConfirmOrder.setOnClickListener { updateStatus(order.id, "CONFIRMED") }
+            btnCancelOrder.setOnClickListener { updateStatus(order.id, "CANCELLED") }
         } else {
-            tvPaymentStatus.text = "Trạng thái: Chưa thanh toán"
-            tvPaymentStatus.setTextColor(resources.getColor(android.R.color.holo_red_dark, null))
+            layoutAdminActions.visibility = View.GONE
+        }
+
+        // Chỉ cho phép thanh toán nếu đang ở trạng thái READY
+        if (order.status == "READY" && order.paymentStatus != "PAID") {
+            tvPaymentStatus.text = "Trạng thái: Chờ thanh toán"
+            tvPaymentStatus.setTextColor(resources.getColor(android.R.color.holo_orange_dark, null))
+            
             btnPay.visibility = View.VISIBLE
             layoutPayment.visibility = View.VISIBLE
 
             rgMethod.setOnCheckedChangeListener { _, checkedId ->
                 if (checkedId == R.id.rb_detail_transfer) {
                     layoutQR.visibility = View.VISIBLE
-                    btnPay.visibility = View.VISIBLE
-                    btnPay.text = "XÁC NHẬN ĐÃ NHẬN TIỀN"
+                    btnPay.text = "XÁC NHẬN ĐA NHẬN TIỀN"
                     loadQR(order.id)
                     startAutoStatusCheck(order.id)
                 } else {
                     layoutQR.visibility = View.GONE
-                    btnPay.visibility = View.VISIBLE
                     btnPay.text = "THANH TOÁN TIỀN MẶT"
                     stopStatusCheck()
                 }
@@ -142,21 +155,40 @@ class OrderDetailFragment : Fragment() {
 
             btnPay.setOnClickListener { 
                 val method = if (rgMethod.checkedRadioButtonId == R.id.rb_detail_transfer) "TRANSFER" else "CASH"
-                
-                androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                    .setTitle("Xác nhận thanh toán")
-                    .setMessage("Bạn xác nhận đã nhận đủ tiền cho đơn hàng này?")
-                    .setPositiveButton("Xác nhận") { _, _ ->
-                        performPayment(order.id, method) 
-                    }
-                    .setNegativeButton("Hủy", null)
-                    .show()
+                performPayment(order.id, method) 
             }
+        } else if (order.paymentStatus == "PAID") {
+            tvPaymentStatus.text = "Trạng thái: Đã thanh toán"
+            tvPaymentStatus.setTextColor(resources.getColor(android.R.color.holo_green_dark, null))
+            btnPay.visibility = View.GONE
+            layoutPayment.visibility = View.GONE
+            stopStatusCheck()
+        } else {
+            // Trường hợp đang CONFIRMED hoặc PREPARING: Chưa cho thanh toán
+            btnPay.visibility = View.GONE
+            layoutPayment.visibility = View.GONE
+            tvPaymentStatus.text = "Trạng thái: Chưa thanh toán"
         }
 
         order.OrderItems?.let {
             rvItems.adapter = OrderItemAdapter(it)
         }
+    }
+
+    private fun updateStatus(id: Long, status: String) {
+        val body = HashMap<String, String>()
+        body.put("status", status)
+        RetrofitClient.orderApi.updateOrderStatus(id, body).enqueue(object : Callback<Order> {
+            override fun onResponse(call: Call<Order>, response: Response<Order>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show()
+                    loadOrderDetail()
+                }
+            }
+            override fun onFailure(call: Call<Order>, t: Throwable) {
+                Toast.makeText(context, "Lỗi kết nối", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun loadQR(id: Long) {
@@ -202,18 +234,13 @@ class OrderDetailFragment : Fragment() {
                 RetrofitClient.payosApi.checkOrderStatus(orderId).enqueue(object : Callback<com.example.appdatmon.data.api.OrderStatusResponse> {
                     override fun onResponse(call: Call<com.example.appdatmon.data.api.OrderStatusResponse>, response: Response<com.example.appdatmon.data.api.OrderStatusResponse>) {
                         val currentStatus = response.body()?.status
-                        android.util.Log.d("PayOS_Polling", "Kết quả: $currentStatus")
-
                         if (response.isSuccessful && currentStatus == "PAID") {
                             isCheckingStatus = false
                             Toast.makeText(context, "Thanh toán thành công!", Toast.LENGTH_LONG).show()
-                            
-                            loadOrderDetail()
-                            
+                            loadOrderDetail() 
                             handler.postDelayed({
                                 if (isAdded) parentFragmentManager.popBackStack()
                             }, 1500)
-
                         } else if (isCheckingStatus) {
                             checkStatusRunnable?.let { handler.postDelayed(it, 3000) }
                         }

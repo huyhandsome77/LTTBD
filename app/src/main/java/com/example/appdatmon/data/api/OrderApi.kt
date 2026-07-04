@@ -24,7 +24,10 @@ interface OrderApi {
     fun deleteOrder(@Path("id") id: Long): Call<Void>
 
     @GET("api/orders/table/{tableId}")
-    fun getCurrentOrderByTable(@Path("tableId") tableId: Long): Call<Order>
+    fun getCurrentOrderByTable(@Path("tableId") tableId: Long): Call<List<Order>>
+
+    @PUT("api/orders/table/{tableId}/pay-all")
+    fun payAllOrdersByTable(@Path("tableId") tableId: Long, @Body paymentData: Map<String, String>): Call<Map<String, String>>
 
     @GET("api/orders/{id}/payment-qr")
     fun getPaymentQR(@Path("id") id: Long): Call<Map<String, String>>
@@ -37,7 +40,8 @@ data class OrderRequest(
     val table_id: Long?,
     val user_id: Long?,
     val items: List<OrderItemRequest>,
-    val note: String?
+    val note: String?,
+    val used_points: Int? = 0
 )
 
 data class OrderItemRequest(

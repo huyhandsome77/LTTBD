@@ -7,10 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.appdatmon.R;
+import com.example.appdatmon.data.api.RetrofitClient;
+import com.example.appdatmon.data.model.Order;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class KitchenAdapter extends RecyclerView.Adapter<KitchenAdapter.KitchenViewHolder> {
 
@@ -18,6 +26,11 @@ public class KitchenAdapter extends RecyclerView.Adapter<KitchenAdapter.KitchenV
 
     public KitchenAdapter(List<KitchenOrder> orderList) {
         this.orderList = orderList;
+    }
+
+    public void updateData(List<KitchenOrder> newList) {
+        this.orderList = newList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -29,48 +42,75 @@ public class KitchenAdapter extends RecyclerView.Adapter<KitchenAdapter.KitchenV
 
     @Override
     public void onBindViewHolder(@NonNull KitchenViewHolder holder, int position) {
-         KitchenOrder order = orderList.get(position);
+         KitchenOrder item = orderList.get(position);
 
-        holder.txtTable.setText(order.getTableName());
-        holder.txtFood.setText(order.getFoodName());
-        holder.txtQuantity.setText("Số lượng: " + order.getQuantity());
-        holder.txtStatus.setText(order.getStatus());
+        holder.txtTable.setText(item.getTableName());
+        holder.txtFood.setText(item.getFoodName());
+        holder.txtQuantity.setText("Số lượng: " + item.getQuantity());
+        
+        String statusLabel = "Chờ chế biến";
+        if (item.getStatus().equals("PREPARING")) statusLabel = "Đang chế biến";
+        else if (item.getStatus().equals("READY")) statusLabel = "Chờ phục vụ";
+        holder.txtStatus.setText(statusLabel);
 
-        // Cập nhật giao diện dựa trên trạng thái
-        updateUIByStatus(holder, order.getStatus());
+        updateUIByStatus(holder, item.getStatus());
 
         holder.btnUpdate.setOnClickListener(v -> {
-            String currentStatus = order.getStatus();
-            if (currentStatus.equals("Chờ chế biến")) {
-                order.setStatus("Đang chế biến");
-            } else if (currentStatus.equals("Đang chế biến")) {
-                order.setStatus("Chờ phục vụ");
+            String nextStatus = "";
+            if (item.getStatus().equals("CONFIRMED")) nextStatus = "PREPARING";
+            else if (item.getStatus().equals("PREPARING")) nextStatus = "READY";
+
+            if (!nextStatus.isEmpty()) {
+                updateOrderStatusOnServer(item.getId(), nextStatus, position, holder.itemView);
             }
-            
-            notifyItemChanged(position);
+        });
+    }
+
+    private void updateOrderStatusOnServer(long orderId, String status, int position, View view) {
+        Map<String, String> body = new HashMap<>();
+        body.put("status", status);
+
+        RetrofitClient.getOrderApi().updateOrderStatus(orderId, body).enqueue(new Callback<Order>() {
+            @Override
+            public void onResponse(Call<Order> call, Response<Order> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(view.getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                    // Local update
+                    orderList.get(position).setStatus(status);
+                    notifyItemChanged(position);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Order> call, Throwable t) {
+                Toast.makeText(view.getContext(), "Lỗi kết nối", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
     private void updateUIByStatus(KitchenViewHolder holder, String status) {
         switch (status) {
-            case "Chờ chế biến":
-                holder.txtStatus.setTextColor(Color.parseColor("#FF9800")); // Orange
+            case "CONFIRMED":
+                holder.txtStatus.setTextColor(Color.parseColor("#FF9800"));
                 holder.txtStatus.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFF3E0")));
                 holder.btnUpdate.setText("BẮT ĐẦU CHẾ BIẾN");
                 holder.btnUpdate.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4CAF50")));
                 holder.btnUpdate.setVisibility(View.VISIBLE);
                 break;
-            case "Đang chế biến":
-                holder.txtStatus.setTextColor(Color.parseColor("#2196F3")); // Blue
+            case "PREPARING":
+                holder.txtStatus.setTextColor(Color.parseColor("#2196F3"));
                 holder.txtStatus.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E3F2FD")));
-                holder.btnUpdate.setText("HOÀN THÀNH (CHỜ PHỤC VỤ)");
+                holder.btnUpdate.setText("CHẾ BIẾN XONG");
                 holder.btnUpdate.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF5722")));
                 holder.btnUpdate.setVisibility(View.VISIBLE);
                 break;
-            case "Chờ phục vụ":
-                holder.txtStatus.setTextColor(Color.parseColor("#4CAF50")); // Green
+            case "READY":
+                holder.txtStatus.setTextColor(Color.parseColor("#4CAF50"));
                 holder.txtStatus.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E8F5E9")));
-                holder.btnUpdate.setVisibility(View.GONE); // Đã xong việc tại bếp
+                holder.btnUpdate.setVisibility(View.GONE);
+                break;
+            default:
+                holder.btnUpdate.setVisibility(View.GONE);
                 break;
         }
     }

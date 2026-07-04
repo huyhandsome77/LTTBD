@@ -26,6 +26,8 @@ class OrderAdapter(
         val tvCustomerName: TextView = itemView.findViewById(R.id.tvCustomerName)
         val tvTableInfo: TextView = itemView.findViewById(R.id.tvTableInfo)
         val tvTotalPrice: TextView = itemView.findViewById(R.id.tvTotalPrice)
+        val tvOrderOriginalPrice: TextView = itemView.findViewById(R.id.tvOrderOriginalPrice)
+        val tvOrderDiscountPrice: TextView = itemView.findViewById(R.id.tvOrderDiscountPrice)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
@@ -42,6 +44,8 @@ class OrderAdapter(
         holder.tvTableInfo.text = "Bàn số: ${order.RestaurantTable?.tableNumber ?: "Mang về"}"
 
         val formatter = NumberFormat.getCurrencyInstance(Locale("vi", "VN"))
+        holder.tvOrderOriginalPrice.text = formatter.format(order.totalPrice)
+        holder.tvOrderDiscountPrice.text = "-${formatter.format(order.discountAmount)}"
         holder.tvTotalPrice.text = formatter.format(order.finalPrice)
 
         // Status styling

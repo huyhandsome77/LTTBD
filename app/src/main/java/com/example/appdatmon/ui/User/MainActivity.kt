@@ -1,16 +1,18 @@
-package com.example.appdatmon
+package com.example.appdatmon.ui.User
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.appdatmon.R
 import com.example.appdatmon.data.api.AuthManager
-import com.google.android.material.navigation.NavigationView
 import com.example.appdatmon.ui.auth.LoginActivity
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -135,15 +137,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         // CLICK QR
-        val btnScanQR =
-            findViewById<LinearLayout>(R.id.btnScanQR)
-
         btnScanQR.setOnClickListener {
-
             startActivity(
                 Intent(this, ScanQRActivity::class.java)
             )
-
         }
 
         // đặt bàn
@@ -177,11 +174,17 @@ class MainActivity : AppCompatActivity() {
             findViewById<LinearLayout>(R.id.btnReview)
 
         btnReview.setOnClickListener {
-
             startActivity(
                 Intent(this, ReviewActivity::class.java)
             )
+        }
 
+        // Xem đánh giá (Banner)
+        val btnViewReview = findViewById<Button>(R.id.btnViewReview)
+        btnViewReview?.setOnClickListener {
+            startActivity(
+                Intent(this, ReviewActivity::class.java)
+            )
         }
 
     }
