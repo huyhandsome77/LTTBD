@@ -61,6 +61,7 @@ class ReservationAdapter(
             "CONFIRMED" -> "Đã xác nhận"
             "ARRIVED" -> "Khách đã đến"
             "CHECKED_IN" -> "Đang sử dụng"
+            "COMPLETED" -> "Hoàn thành"
             "CANCELLED" -> "Đã hủy"
             "EXPIRED" -> "Đã hết hạn"
             else -> res.status
@@ -69,6 +70,7 @@ class ReservationAdapter(
         val statusBg = when (res.status) {
             "CONFIRMED" -> R.drawable.bg_status_active
             "CHECKED_IN" -> R.drawable.bg_status_active
+            "COMPLETED" -> R.drawable.bg_status_ready
             else -> R.drawable.bg_status_inactive
         }
         holder.tvStatus.setBackgroundResource(statusBg)

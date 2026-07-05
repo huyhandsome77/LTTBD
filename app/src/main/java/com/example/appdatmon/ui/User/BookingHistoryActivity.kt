@@ -91,8 +91,10 @@ class UserBookingAdapter(private val list: List<Reservation>) : RecyclerView.Ada
         holder.tvStatus.text = when (item.status) {
             "PENDING" -> "Chờ duyệt"
             "CONFIRMED" -> "Đã xác nhận"
-            "CHECKED_IN" -> "Đã nhận bàn"
+            "CHECKED_IN" -> "Đang sử dụng"
+            "COMPLETED" -> "Hoàn thành"
             "CANCELLED" -> "Đã hủy"
+            "EXPIRED" -> "Đã hết hạn"
             else -> item.status
         }
 
