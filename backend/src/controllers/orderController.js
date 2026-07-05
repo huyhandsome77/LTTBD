@@ -1,4 +1,4 @@
-const { Order, OrderItem, Product, RestaurantTable, User, sequelize } = require('../models');
+const { Order, OrderItem, Product, RestaurantTable, User, Reservation, sequelize } = require('../models');
 
 exports.createOrder = async (req, res, next) => {
     const t = await sequelize.transaction();
@@ -257,6 +257,18 @@ exports.payAllOrdersByTable = async (req, res, next) => {
             { where: { id: tableId }, transaction: t }
         );
 
+        // Tự động hoàn thành lịch đặt bàn liên quan nếu có
+        await Reservation.update(
+            { status: 'COMPLETED' },
+            {
+                where: {
+                    table_id: tableId,
+                    status: 'CHECKED_IN'
+                },
+                transaction: t
+            }
+        );
+
         await t.commit();
         res.json({ message: `Đã thanh toán thành công ${orders.length} đơn hàng.` });
     } catch (error) {
@@ -296,6 +308,18 @@ exports.payOrder = async (req, res, next) => {
             await RestaurantTable.update(
                 { status: 'AVAILABLE' },
                 { where: { id: order.table_id }, transaction: t }
+            );
+
+            // Tự động hoàn thành lịch đặt bàn liên quan nếu có
+            await Reservation.update(
+                { status: 'COMPLETED' },
+                {
+                    where: {
+                        table_id: order.table_id,
+                        status: 'CHECKED_IN'
+                    },
+                    transaction: t
+                }
             );
         }
 
