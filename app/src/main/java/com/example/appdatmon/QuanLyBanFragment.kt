@@ -205,14 +205,26 @@ class QuanLyBanFragment : Fragment() {
                         tvDiscountAmount.text = "-${formatter.format(totalDiscount)}"
                         tvTotalAmount.text = formatter.format(totalFinal)
 
-                        // Hiển thị nút thanh toán
+                        // Kiểm tra trạng thái: Tất cả đơn hàng phải ở trạng thái READY hoặc COMPLETED mới được thanh toán
+                        val canPay = orders.all { it.status == "READY" || it.status == "COMPLETED" }
+                        
                         btnPay.visibility = View.VISIBLE
-                        rgPaymentMethod.visibility = View.VISIBLE
+                        if (!canPay) {
+                            btnPay.isEnabled = false
+                            btnPay.alpha = 0.5f
+                            btnPay.text = "CHỜ CHẾ BIẾN XONG..."
+                            rgPaymentMethod.visibility = View.GONE
+                        } else {
+                            btnPay.isEnabled = true
+                            btnPay.alpha = 1.0f
+                            btnPay.text = if (rgPaymentMethod.checkedRadioButtonId == R.id.rbTransfer) "XÁC NHẬN ĐÃ NHẬN TIỀN" else "THANH TOÁN TIỀN MẶT"
+                            rgPaymentMethod.visibility = View.VISIBLE
+                        }
                         
                         rgPaymentMethod.setOnCheckedChangeListener { _, checkedId ->
                             if (checkedId == R.id.rbTransfer) {
                                 layoutQR.visibility = View.VISIBLE
-                                btnPay.text = "XÁC NHẬN ĐÃ NHẬN TIỀN"
+                                if (canPay) btnPay.text = "XÁC NHẬN ĐÃ NHẬN TIỀN"
                                 
                                 val firstOrderId = orders.firstOrNull()?.id
                                 if (firstOrderId != null) {
