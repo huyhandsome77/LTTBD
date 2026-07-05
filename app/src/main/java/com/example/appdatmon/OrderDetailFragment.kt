@@ -123,6 +123,19 @@ class OrderDetailFragment : Fragment() {
             else -> order.status
         }
 
+        val statusBg = when (order.status) {
+            "PENDING" -> R.drawable.bg_status_pending
+            "CONFIRMED" -> R.drawable.bg_status_confirmed
+            "PREPARING" -> R.drawable.bg_status_preparing
+            "READY" -> R.drawable.bg_status_ready
+            "COMPLETED" -> R.drawable.bg_status_completed
+            "CANCELLED" -> R.drawable.bg_status_cancelled
+            else -> R.drawable.bg_status_inactive
+        }
+        tvStatus.setBackgroundResource(statusBg)
+        tvStatus.setTextColor(resources.getColor(R.color.white, null))
+        tvStatus.setPadding(20, 10, 20, 10)
+
         // Logic hiển thị nút bấm theo quy trình mới
         if (order.status == "PENDING") {
             layoutAdminActions.visibility = View.VISIBLE

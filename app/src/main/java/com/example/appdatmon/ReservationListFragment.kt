@@ -16,6 +16,9 @@ import com.example.appdatmon.data.model.Reservation
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.math.abs
 
 class ReservationListFragment : Fragment() {
 
@@ -72,6 +75,27 @@ class ReservationListFragment : Fragment() {
     }
 
     private fun confirmCheckIn(res: Reservation) {
+        // Kiểm tra thời gian: Chỉ cho phép nhận bàn trước/sau 30 phút so với giờ đặt
+        try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+            inputFormat.timeZone = TimeZone.getTimeZone("UTC")
+            val reservationDate = inputFormat.parse(res.reservationTime)
+
+            if (reservationDate != null) {
+                val currentTime = System.currentTimeMillis()
+                val resTime = reservationDate.time
+                val diff = abs(currentTime - resTime)
+                val thirtyMinutesInMs = 30 * 60 * 1000
+
+                if (diff > thirtyMinutesInMs) {
+                    Toast.makeText(context, "Chỉ có thể nhận bàn trong khoảng 30 phút trước và sau giờ đặt", Toast.LENGTH_LONG).show()
+                    return
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("ResListFragment", "Lỗi kiểm tra thời gian: ${e.message}")
+        }
+
         AlertDialog.Builder(requireContext())
             .setTitle("Xác nhận nhận bàn")
             .setMessage("Khách '${res.guestName}' đã đến và nhận bàn ${res.table?.tableNumber}?")

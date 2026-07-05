@@ -60,11 +60,12 @@ class OrderAdapter(
         }
 
         val statusBg = when (order.status) {
-            "PENDING" -> R.drawable.bg_status_inactive
-            "CONFIRMED" -> R.drawable.bg_status_active
-            "PREPARING" -> R.drawable.bg_status_active
-            "READY" -> R.drawable.bg_status_active
-            "COMPLETED" -> R.drawable.bg_status_active
+            "PENDING" -> R.drawable.bg_status_pending
+            "CONFIRMED" -> R.drawable.bg_status_confirmed
+            "PREPARING" -> R.drawable.bg_status_preparing
+            "READY" -> R.drawable.bg_status_ready
+            "COMPLETED" -> R.drawable.bg_status_completed
+            "CANCELLED" -> R.drawable.bg_status_cancelled
             else -> R.drawable.bg_status_inactive
         }
         holder.tvOrderStatus.setBackgroundResource(statusBg)
